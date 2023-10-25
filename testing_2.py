@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame, sys,os
 
 #from pygame.sprite import _Group
 
@@ -11,10 +11,10 @@ class Player(pygame.sprite.Sprite):
     
     def __init__(self):
         super().__init__()
-        self.image = pygame.transform.scale(pygame.image.load('player_images\character1.png'),(66,129))
+        self.image = pygame.transform.scale(pygame.image.load(os.getcwd()+"/player_images/character1.png"),(66,129))
         self.rect = self.image.get_rect(midbottom = (0,600))
-        p2 = pygame.transform.scale(pygame.image.load('player_images\character2.png'),(66,129))
-        p3 = pygame.transform.scale(pygame.image.load('player_images\character3.png'),(66,129))
+        p2 = pygame.transform.scale(pygame.image.load(os.getcwd()+"/player_images/character2.png"),(66,129))
+        p3 = pygame.transform.scale(pygame.image.load(os.getcwd()+"/player_images/character3.png"),(66,129))
         self.player_sprites = [self.image, p2, p3]
         self.player_anim_index = 0
 
@@ -120,3 +120,4 @@ while True:
     clock.tick(60)
 print("Hello world")
 print("hsd")
+print('thaav is non existent')
