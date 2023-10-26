@@ -71,6 +71,8 @@ class Player(pygame.sprite.Sprite):
         if self.rect.bottom < 600:
             self.grav -= 0.4
             self.rect.bottom -= self.grav
+
+        if self.rect.bottom
         
         if self.rect.bottom >= 600:
             self.rect.bottom = 600
@@ -120,5 +122,5 @@ while True:
     pygame.display.update()
     clock.tick(60)
 
-
+print('hello world')
 #end
