@@ -1,4 +1,4 @@
-import pygame, sys,os
+import pygame, sys
 
 #from pygame.sprite import _Group
 
@@ -11,10 +11,10 @@ class Player(pygame.sprite.Sprite):
     
     def __init__(self):
         super().__init__()
-        self.image = pygame.transform.scale(pygame.image.load(os.getcwd()+"/player_images/character1.png"),(66,129))
+        self.image = pygame.transform.scale(pygame.image.load('player_images\character1.png'),(66,129))
         self.rect = self.image.get_rect(midbottom = (0,600))
-        p2 = pygame.transform.scale(pygame.image.load(os.getcwd()+"/player_images/character2.png"),(66,129))
-        p3 = pygame.transform.scale(pygame.image.load(os.getcwd()+"/player_images/character3.png"),(66,129))
+        p2 = pygame.transform.scale(pygame.image.load('player_images\character2.png'),(66,129))
+        p3 = pygame.transform.scale(pygame.image.load('player_images\character3.png'),(66,129))
         self.player_sprites = [self.image, p2, p3]
         self.player_anim_index = 0
 
@@ -88,7 +88,7 @@ class Blocks(pygame.sprite.Sprite):
         super().__init__()
 
         self.image = pygame.transform.scale_by(pygame.image.load('ledge.png'),10)
-        self.rect = self.image.get_rect(midbottom = (x,y))
+        self.rect = self.image.get_rect(bottomleft = (x,y))
         
 
 
@@ -96,7 +96,7 @@ class Blocks(pygame.sprite.Sprite):
         8+9
 
 block1 = pygame.sprite.Group()
-block1.add(Blocks(200,200))
+block1.add(Blocks(200,600))
 
 
 player = pygame.sprite.GroupSingle()
@@ -111,13 +111,14 @@ while True:
             sys.exit()
     
     disp1.fill((70,67,89))
-    player.draw(disp1)
-    player.update()
 
     block1.draw(disp1)
 
+    player.draw(disp1)
+    player.update()
+
     pygame.display.update()
     clock.tick(60)
-print("Hello world")
-print("hsd")
-print('thaav is non existent')
+
+
+#end
