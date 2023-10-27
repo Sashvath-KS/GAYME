@@ -57,14 +57,6 @@ class Player(pygame.sprite.Sprite):
             self.grav = 10
             self.rect.bottom -= self.grav
 
-    '''def mouse_stuff(self):
-        mouse_keys = pygame.mouse.get_pressed()
-        
-        #if mouse_keys[0]:
-        #    if self.look == 'right':'''
-                
-
-
 
     
     def apply_grav(self):
@@ -72,7 +64,8 @@ class Player(pygame.sprite.Sprite):
             self.grav -= 0.4
             self.rect.bottom -= self.grav
 
-        if self.rect.bottom
+        if self.rect.bottom:
+            8+9
         
         if self.rect.bottom >= 600:
             self.rect.bottom = 600
@@ -124,4 +117,3 @@ while True:
 
 print('hello world')
 #end
-print(8+7)
