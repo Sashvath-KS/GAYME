@@ -15,10 +15,10 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         #assigning player images and rects and player's animation list
-        self.image = pygame.transform.scale_by(pygame.image.load('player_images\character1.png'),4)
+        self.image = pygame.transform.scale_by(pygame.image.load('player_images\character1.png'),3)
         self.rect = self.image.get_rect(midbottom = (0,400))
-        p2 = pygame.transform.scale_by(pygame.image.load('player_images\character2.png'),4)
-        p3 = pygame.transform.scale_by(pygame.image.load('player_images\character3.png'),4)
+        p2 = pygame.transform.scale_by(pygame.image.load('player_images\character2.png'),3)
+        p3 = pygame.transform.scale_by(pygame.image.load('player_images\character3.png'),3)
         self.player_sprites = [self.image, p2, p3]
         self.player_anim_index = 0
 
