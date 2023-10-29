@@ -15,10 +15,10 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         #assigning player images and rects and player's animation list
-        self.image = pygame.transform.scale_by(pygame.image.load('player_images\character1.png'),3)
+        self.image = pygame.transform.scale_by(pygame.image.load('player_images/character1.png'),3)
         self.rect = self.image.get_rect(midbottom = (0,400))
-        p2 = pygame.transform.scale_by(pygame.image.load('player_images\character2.png'),3)
-        p3 = pygame.transform.scale_by(pygame.image.load('player_images\character3.png'),3)
+        p2 = pygame.transform.scale_by(pygame.image.load('player_images/character2.png'),3)
+        p3 = pygame.transform.scale_by(pygame.image.load('player_images/character3.png'),3)
         self.player_sprites = [self.image, p2, p3]
         self.player_anim_index = 0
 
@@ -90,7 +90,8 @@ class Player(pygame.sprite.Sprite):
         #if the player collides with any of the boxes
         if pygame.sprite.spritecollideany(self,block_group):
                     #if yes, then player bottom position if the respective box's top position
-                    a = pygame.sprite.spritecollideany(self,block_group).rect.top
+                a = pygame.sprite.spritecollideany(self,block_group).rect.top
+                if self.rect.bottom == a:
                     self.rect.bottom = a
                     self.jump_action = True
                     self.grav = 0.29
