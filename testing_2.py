@@ -16,11 +16,12 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         #assigning player images and rects and player's animation list
         self.image = pygame.transform.scale_by(pygame.image.load('player_images/character1.png'),3)
-        self.rect = self.image.get_rect(midbottom = (0,400))
+        self.rect = pygame.Rect((600,200),(1,129))
         p2 = pygame.transform.scale_by(pygame.image.load('player_images/character2.png'),3)
         p3 = pygame.transform.scale_by(pygame.image.load('player_images/character3.png'),3)
         self.player_sprites = [self.image, p2, p3]
         self.player_anim_index = 0
+        self.mask = pygame.mask.from_surface(self.image)
 
         #player looking direction
         self.look = 'right'
@@ -83,23 +84,32 @@ class Player(pygame.sprite.Sprite):
     #gravity and position of player if he collides with a box
     def apply_grav(self):
         #if the player is not collidiing with any of the boxes
-        if not pygame.sprite.spritecollideany(self,block_group):
+        if not pygame.sprite.spritecollide(self,block_group, False, pygame.sprite.collide_mask):
                 self.grav -= 0.4
                 self.rect.bottom -= self.grav
 
         #if the player collides with any of the boxes
-        if pygame.sprite.spritecollideany(self,block_group):
+        if pygame.sprite.spritecollide(self,block_group, False, pygame.sprite.collide_mask):
                     #if yes, then player bottom position if the respective box's top position
-                    a = pygame.sprite.spritecollideany(self,block_group).rect.top
-                    self.rect.bottom = a
-                    self.jump_action = True
-                    self.grav = 0.29
+                    a = pygame.sprite.spritecollideany(self,block_group)
+                    if a != None:
+                        a = pygame.sprite.spritecollideany(self,block_group).rect.top
+                        self.rect.bottom = a
+                        self.jump_action = True
+                        self.grav = 0.29
+    
+    def player_collision(self):
+          if pygame.sprite.spritecollideany(self,block_group):
+                a=pygame.sprite.spritecollideany(self,block_group)
+                if a.rect.right == self.rect.right:
+                    print(True)
     
     #function to update the player with its respective functions
     def update(self):
         self.player_animations()
         self.keybinds_check_player()
         self.apply_grav()
+        #self.player_collision()
 
 
 #class to create boxes
@@ -110,6 +120,7 @@ class Blocks(pygame.sprite.Sprite):
 
         self.image = pygame.transform.scale_by(pygame.image.load('ledge.png'),10)
         self.rect = self.image.get_rect(bottomleft = (x,y))
+        self.mad = pygame.mask.from_surface(self.image)
         
 
     #useless for now
