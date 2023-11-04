@@ -162,4 +162,3 @@ while True:
     clock.tick(60)
 
 #end
-print('hello world')
