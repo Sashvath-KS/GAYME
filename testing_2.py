@@ -159,5 +159,7 @@ while True:
     #updating the screen and framrate
     pygame.display.update()
     clock.tick(60)
+    print("EROIUh")
 
+    
 #end
