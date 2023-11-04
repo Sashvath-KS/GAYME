@@ -1,5 +1,4 @@
 import pygame, sys
-# I WROTE THIS CODE
 #from pygame.sprite import _Group
 
 pygame.init()
@@ -45,7 +44,7 @@ class Player(pygame.sprite.Sprite):
         #updation of image
         self.image = self.player_sprites[int(self.player_anim_index)]
 
-    
+
     #keys to check player movement
     def keybinds_check_player(self):
         #gets keys in a dictionary type from keyboard in a 1 or 0 fashion
