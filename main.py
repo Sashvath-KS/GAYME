@@ -1,5 +1,5 @@
 import pygame,sys
-import car_game , jumper , FlappyBirdKnockOff , ping_pong #, shooter , tictactoe
+import car_game , jumper ,FlappyBirdKnockOff, ping_pong #, shooter , tictactoe
 
 #to start pygame
 pygame.init()
@@ -111,7 +111,7 @@ def main_menu():
             return jumper.game()
         
         elif button3.draw():
-            return FlappyBirdKnockOff.game()
+            return FlappyBirdKnockOff.game_pause_start()
         
         elif button4.draw():
             return opening_screen()

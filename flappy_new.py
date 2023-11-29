@@ -178,10 +178,7 @@ def points_file(update = False, update_point = 0 ,reset = False):
 
 #new game func
 def new_game():
-    global L, pipe_obj_x_dist, bird, points, collided_with_pipes, iframes, disp, clock
-    disp = pygame.display.set_mode((900,600), pygame.RESIZABLE )
-    clock = pygame.time.Clock()
-    pygame.display.set_caption('FlappyBirdKnockOff')
+    global L, pipe_obj_x_dist, bird, points, collided_with_pipes, iframes
     #to start a new game
     points =0
     pipe_obj_x_dist = newgame_x_dist
@@ -251,3 +248,5 @@ def game_pause_start():
         disp.fill((70,70,70))
         pygame.display.update()
         clock.tick(60)
+
+#game_pause_start()
