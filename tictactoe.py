@@ -34,12 +34,12 @@ class Button:
         
 
 
-opening_screen=pygame.image.load('assets/opening_screen.jpeg')
+opening_screen=pygame.image.load('assets/tictactoe_assets/opening_screen.jpeg')
 window.blit(opening_screen,(0,0))
-button1=Button('assets/circle_option.jpeg',
-               (50,350),'assets/circle_select.jpeg')
-button2=Button('assets/cross_option.jpeg',
-               (400,350),'assets/cross_select.jpeg')
+button1=Button('assets/tictactoe_assets/circle_option.jpeg',
+               (50,350),'assets/tictactoe_assets/circle_select.jpeg')
+button2=Button('assets/tictactoe_assets/cross_option.jpeg',
+               (400,350),'assets/tictactoe_assets/cross_select.jpeg')
 
 game_active=False
 player_order=None
@@ -47,12 +47,12 @@ def player_choice():
     global player_order,game_active
     if button1.draw():
         player_order=[1,-1]
-        game_screen=pygame.image.load('assets/tictactoe_2.jpeg')
+        game_screen=pygame.image.load('assets/tictactoe_assets/tictactoe_2.jpeg')
         window.blit(game_screen,(0,0))
         game_active=True
     elif button2.draw():
         player_order=[-1,1]
-        game_screen=pygame.image.load('assets/tictactoe_1.jpeg')
+        game_screen=pygame.image.load('assets/tictactoe_assets/tictactoe_1.jpeg')
         window.blit(game_screen,(0,0))
         game_active=True
 

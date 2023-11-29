@@ -21,28 +21,28 @@ def spooder_car():
     pygame.display.set_caption('spooder game')
 
     #game start screen
-    start_screen=pygame.image.load('assets/game_assets/start_screen.jpg').convert()
+    start_screen=pygame.image.load('assets/spooder_assets/start_screen.jpg').convert()
     window.blit(start_screen,(160,0))
     pygame.display.update()
 
     #game background and background music
-    background=pygame.image.load('assets/game_assets/background2.jpeg').convert()
-    music=pygame.mixer.Sound('assets/game_assets/sundrive.mp3')
+    background=pygame.image.load('assets/spooder_assets/background2.jpeg').convert()
+    music=pygame.mixer.Sound('assets/spooder_assets/sundrive.mp3')
     music.play(loops=-1)
 
     #sound effects
-    death=pygame.mixer.Sound('assets/game_assets/roblox-death-sound-effect.mp3')
-    explosion=pygame.mixer.Sound('assets/game_assets/explosion.wav')
+    death=pygame.mixer.Sound('assets/spooder_assets/roblox-death-sound-effect.mp3')
+    explosion=pygame.mixer.Sound('assets/spooder_assets/explosion.wav')
 
     #platform rect
-    platform=pygame.image.load('assets/game_assets/platform2.png').convert()
+    platform=pygame.image.load('assets/spooder_assets/platform2.png').convert()
     platform_rect=platform.get_rect(topleft=(0,580))
 
     #player frames
-    spooderR=pygame.image.load('assets/game_assets/spooderR.png').convert_alpha()
-    spooderL=pygame.image.load('assets/game_assets/spooderL.png').convert_alpha()
-    spooder_moveL=pygame.image.load('assets/game_assets/spooder_moveL.png').convert_alpha()
-    spooder_moveR=pygame.image.load('assets/game_assets/spooder_moveR.png').convert_alpha()
+    spooderR=pygame.image.load('assets/spooder_assets/spooderR.png').convert_alpha()
+    spooderL=pygame.image.load('assets/spooder_assets/spooderL.png').convert_alpha()
+    spooder_moveL=pygame.image.load('assets/spooder_assets/spooder_moveL.png').convert_alpha()
+    spooder_moveR=pygame.image.load('assets/spooder_assets/spooder_moveR.png').convert_alpha()
     spooder_move=[spooderL,spooderR,spooder_moveL,spooder_moveR]
     spooder_index=1
 
@@ -53,11 +53,11 @@ def spooder_car():
     score=0
 
     #nuke rect and attributes
-    nuke=pygame.image.load('assets/game_assets/nuke2.png').convert_alpha()
+    nuke=pygame.image.load('assets/spooder_assets/nuke2.png').convert_alpha()
     velocity_nuke=5
     g=0.2
     nuke_list=[]
-    explosion_cloud=pygame.image.load('assets/game_assets/explosion.png')
+    explosion_cloud=pygame.image.load('assets/spooder_assets/explosion.png')
 
     #timer which activates every 0.7 seconds to spawn a nuke
     nuke_timer=pygame.USEREVENT+1
@@ -103,7 +103,7 @@ def spooder_car():
         window.blit(health_surf,health_rect)
 
     #game end screen
-    end=pygame.image.load('assets/game_assets/die.png').convert()
+    end=pygame.image.load('assets/spooder_assets/die.png').convert()
 
     #game loop
 ##def spooder_car():

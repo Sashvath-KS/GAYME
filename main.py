@@ -108,10 +108,10 @@ def main_menu():
             return car_game.spooder_car()
         
         elif button2.draw():
-            print('coming in next update')
+            return jumper.game()
         
         elif button3.draw():
-            print('coming in next update')
+            return FlappyBirdKnockOff.game()
         
         elif button4.draw():
             return opening_screen()
