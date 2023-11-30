@@ -33,6 +33,7 @@ user = auth.sign_in_with_email_and_password(email, password)
 class Bullets(pygame.sprite.Sprite):
     global player1score
     def __init__(self,y,role):
+            print("fd")
             super().__init__()
             self.image = pygame.transform.scale(pygame.image.load(r"bullet.png"),(50,10)).convert_alpha()
             self.origin= role
@@ -67,22 +68,24 @@ class Bullets(pygame.sprite.Sprite):
             
             
                 
-            
+hostscore = 0          
+playerscore = 0     
 def stremandret():
     def stream_handler(message1):
-        global hostpos
+        global hostpos,hostscore
         
         hostpos = message1["data"]
         
         hostbox.centery = hostpos[0]   
         if hostpos[1]!=0:
             bulletsgrp.add(Bullets(hostpos[1],role = "host"))
+        hostscore = hostpos[2]
     try:
         db.child(str(gameconnectionid)+"host").stream(stream_handler,user.get("idToken"))
     except:
         pass
     def stream_handler2(message2):
-        global playerpos
+        global playerpos,playerscore
         playerpos = message2["data"]
         playerbox.centery = playerpos[0]
        
@@ -90,7 +93,7 @@ def stremandret():
         if playerpos[1]!=0:
             bulletsgrp.add(Bullets(playerpos[1],role ="player"))
 
-        
+        playerscore = playerpos[2]
         
     try:
         db.child(str(gameconnectionid)+"player").stream(stream_handler2,user.get("idToken"))
@@ -105,17 +108,16 @@ temp = 0
 
 def pushdata():
         global temp,gameconnectionid,bulletpos
-        while True:
-          db.child(str(gameconnectionid)+role).set((temp,bulletpos),user.get("idToken"))
+        while running:
+          db.child(str(gameconnectionid)+role).set((temp,bulletpos,player1score,player2score),user.get("idToken"))
 
 def varassignment():
-    global my_font,height,width,lent,ballx,bally,speed,delay,padding,fontcolour,fps,player1score,player2score
+    global my_font,height,width,lent,speed,delay,padding,fontcolour,fps,player1score,player2score
     my_font = pygame.font.SysFont('Calibri', 25,True)
-    height = 400
-    width = 400
+    height = 600
+    width = 800
     lent = 150 
-    ballx = 8
-    bally = 8
+
     speed = 8 
     delay = 500
     padding = 10
@@ -134,58 +136,53 @@ def config():
         gameconnectionid= int(input("enter host id to connect to"))
     
 config()    
-db.child(str(gameconnectionid)+"host").set((100,100),user.get("idToken"))
-db.child(str(gameconnectionid)+"player").set((100,100),user.get("idToken"))
+db.child(str(gameconnectionid)+"host").set((100,100,0,0),user.get("idToken"))
+db.child(str(gameconnectionid)+"player").set((100,100,0,0),user.get("idToken"))
 gamescreen = pygame.display.set_mode((width,height), pygame.RESIZABLE)
-dimension = gamescreen.get_size()[0]
-def resizewindow():
-    global hostbox,playerbox,dimension,width,height
-    dimensionnew = gamescreen.get_size()
-    width = dimensionnew[0]
-    height = dimensionnew[1]
-    playerbox.right = width
-    dimension = dimensionnew
-    return height
-def converttorect():
-    global leftscoreboardasrect,rightscoreboardaasrect
-    leftscoreboardasrect = player1box.get_rect()
-    rightscoreboardaasrect = player2box.get_rect()
-    rightscoreboardaasrect.bottomright =(width-padding,height-padding)
-    leftscoreboardasrect.bottomleft = (0+padding,height-padding)
-def renderfont():
-    global player1box,player2box
-    player1box = my_font.render("Player 1 Score: "+ str(player1score),True,fontcolour,(66, 245, 176))
-    player2box = my_font.render("Player 2 Score: "+ str(player2score),True,fontcolour,(66, 245, 176))      
-def blit_and_draw_rect():
+defaultfont = pygame.font.Font("assets/pixel_font.ttf",19)
 
-    gamescreen.blit(player1box, leftscoreboardasrect)
-    gamescreen.blit(player2box, rightscoreboardaasrect)
-    pygame.draw.rect(gamescreen, (0, 0, 0), hostbox)
-    pygame.draw.rect(gamescreen, (0, 0, 0), playerbox)
+def drawtext(text,font,x,y,colour = (44,39,133)):
+        box = font.render(text,True,colour)
+
+        gamescreen.blit(box,(x,y))
+
+
+def blit_and_draw_rect():
+    
+    drawtext(text ="Player 1 Score: "+ str(hostscore),font=defaultfont,x = 0,y = 580)
+    
+    
+    drawtext(text ="Player 1 Score: "+ str(playerscore),font=defaultfont,x = 450,y = 580)
+  
+    
+
+    
+
+
+    
+    gamescreen.blit(hostimg,hostbox)
+    gamescreen.blit(playerimg,playerbox)
 
 bulletsgrp = pygame.sprite.Group()
 running = True
-hostbox = pygame.Rect(0,(height//2)-100,20,lent)
-playerbox = pygame.Rect(width-20,(height//2)-100,20,lent)
+hostimg = pygame.transform.scale((pygame.image.load("assets/shooter_assets/spaceship.png")),(60,90))
+playerimg = pygame.transform.scale((pygame.image.load("assets/shooter_assets/spaceship.png")),(60,90))
+playerimg = pygame.transform.flip(playerimg, True, False)
+hostbox = hostimg.get_rect()
+playerbox = playerimg.get_rect()
+hostbox.left = 0
+playerbox.right = width
 bulletpos = 0
 def game():
     global running,height,temp,bulletsgrp,bulletpos
     
     while running:
         
-        gamescreen.fill((66, 245, 176))
-        dimensionnew = gamescreen.get_size()
-        renderfont()
-        if dimension != dimensionnew:
-            resizewindow()       
+        gamescreen.fill((255,255,255))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                print("empty")
-            
                 running = False
-                 
-                db.child(str(gameconnectionid)+"host").remove(user.get("idToken"))
-                db.child(str(gameconnectionid)+"player").remove(user.get("idToken"))
+              
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if role == "host":
             
@@ -217,13 +214,15 @@ def game():
             abullet.hitplayer()
            
       
-        bulletsgrp.draw(gamescreen)
-        converttorect()
+        
         blit_and_draw_rect()
+        bulletsgrp.draw(gamescreen)
         pygame.display.flip()
         fps.tick(60)
-       
-    pygame.quit()  #Making pushdata function as a thread to reduce downtime
+        
+    pygame.quit() 
+    db.child(str(gameconnectionid)+"host").remove(user.get("idToken"))
+    db.child(str(gameconnectionid)+"player").remove(user.get("idToken")) #Making pushdata function as a thread to reduce downtime
 
 #Making the stream function as a thread to ensure that it is constantly being run 
 p1 = threading.Thread(target = pushdata,daemon=True)
@@ -232,5 +231,7 @@ p2 = threading.Thread(target = stremandret,daemon=True)
 p2.start()
 
 
-game()
+
      
+
+game()
