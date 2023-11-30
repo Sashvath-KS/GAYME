@@ -2,12 +2,11 @@ import pygame, sys, random, pickle
 
 pygame.init()
 
-#display, clock(frames per second), caption, icon
+#display, clock(frames per second), caption, icon, bg
 disp = pygame.display.set_mode((900,600), pygame.RESIZABLE )
 clock = pygame.time.Clock()
 pygame.display.set_caption('FlappyBirdKnockOff')
-bg = pygame.transform.scale(pygame.image.load('assets/flappy_assets/bg.jpg'), (900,600))
-#pygame.display.set_icon()
+og_disp = pygame.display.get_window_size()
 
 #bird class
 class Bird():
@@ -15,7 +14,7 @@ class Bird():
     def __init__(self):
         #getting the image,rect and transforming it
         self.image = pygame.image.load('assets/flappy_assets/bird.png')
-        self.image = pygame.transform.scale(self.image, (30,35))
+        self.image = pygame.transform.scale(self.image, (60,70))
         self.rect = self.image.get_rect(midbottom = (450,300))
         #to make sure bird doesnt fly 'fly'
         self.jump_pressed = True
@@ -113,14 +112,14 @@ class Pipe:
         #removing the pipe that went out of bounds
         if  (self.pipe1_rect.right<=-290):
 
-            L.pop(L.index(self))
+            Pipe_list.pop(Pipe_list.index(self))
 
             #new x offset between the new pipe and the final pipe to maintain same distance between pipes
-            final_pipe_pos = L[-1].pipe1_rect.x +340 #approximately the same(there is a small difference of 0.1cm)
+            final_pipe_pos = Pipe_list[-1].pipe1_rect.x +340 #approximately the same(there is a small difference of 0.1cm)
             pipe_obj_x_dist = final_pipe_pos
 
             #creating a new pipe 
-            L.append(Pipe())
+            Pipe_list.append(Pipe())
 
 
     
@@ -151,48 +150,92 @@ class Pipe:
         self.pipedraw()
         self.pipe_collisions(bird)
 
+first_few_initializing_bg_counter=0
+class Moving:
+    def __init__(self):
+        global bg_pos_start, first_few_initializing_bg_counter
+        self.image = pygame.transform.scale(pygame.image.load('assets/flappy_assets/bg.jpg'),pygame.display.get_window_size())
+        self.rect = self.image.get_rect(topleft =bg_pos_start)
+        if first_few_initializing_bg_counter<= 5:
+            bg_pos_start = (pygame.Surface.get_width(self.image)+bg_pos_start[0]-5,0)
+            first_few_initializing_bg_counter+=1
+
+
+    def out_of_bounds(self):
+        global bg_pos_start
+
+        if self.rect.x <= -3600:
+            bg_pos_start = (pygame.Surface.get_width(self.image)+BG_list[-1].rect.topleft[0]-5, BG_list[-1].rect.topleft[-1])
+            BG_list.remove(self)
+            BG_list.append(Moving())
+            print(BG_list)
+    
+    def bg_move(self):
+        self.rect.x -=3
+
+    def display_on_screen(self):
+        disp.blit(self.image,self.rect)
+
+    def resize(self):
+        global og_disp
+        if og_disp != pygame.display.get_window_size():
+            og_disp = pygame.display.get_window_size()
+            for x in BG_list:
+                x.image = pygame.transform.scale(pygame.image.load('assets/flappy_assets/bg.jpg'),pygame.display.get_window_size())
+
+    def update(self):
+        self.bg_move()
+        self.out_of_bounds()
+        self.display_on_screen()
+        self.resize()
+
 
 #points function[update = to update the highscore with the update_point if its point is higher than previous highscore
 # reset = if the player wishes the high score to be reset]
 #done with binary files
 def points_file(update = False, update_point = 0 ,reset = False):
     if reset:
-        file = open('assets/flappy_assets/point.bin','wb')
+        file = open('point.bin','wb')
         pickle.dump(0,file)
     if update:
             try:
                 #if file exists continue to compare the scores
-                file = open('assets/flappy_assets/point.bin', 'rb')
+                file = open('point.bin', 'rb')
                 d=pickle.load(file)
                 if update_point > d:
                     d = update_point
                     file.close()
-                    file =open('assets/flappy_assets/point.bin', 'wb')
+                    file =open('point.bin', 'wb')
                     pickle.dump(d, file)
                 file.close()
             except:
                     #if file does not exist, then create a file with the given update_point argument
-                    file = open('assets/flappy_assets/point.bin','wb')
+                    file = open('point.bin','wb')
                     pickle.dump(update_point,file)
                 
 
 
 #new game func
 def new_game():
-    global L, pipe_obj_x_dist, bird, points, collided_with_pipes, iframes, disp, clock
-    disp = pygame.display.set_mode((900,600), pygame.RESIZABLE )
-    clock = pygame.time.Clock()
-    pygame.display.set_caption('FlappyBirdKnockOff')
+    global Pipe_list, pipe_obj_x_dist, bird, points, collided_with_pipes, iframes, BG_list, bg_pos_start,first_few_initializing_bg_counter, disp
     #to start a new game
+
+    #redoing/assigning objects
+    first_few_initializing_bg_counter=0
+    bg_pos_start = (0,0)
+    BG_list = [Moving() for x in range(5)]
     points =0
     pipe_obj_x_dist = newgame_x_dist
-    L =[Pipe() for x in range(6)]
+    Pipe_list =[Pipe() for x in range(6)]
     bird = Bird()
+
     #collision with bird and pipes and ground
     collided_with_pipes = False
 
     #time/files with points/colliders checker and other stuff
     iframes = 0
+
+    disp = pygame.display.set_mode(pygame.display.get_window_size(), pygame.RESIZABLE )
 
 
 #func that runs flappy 
@@ -204,17 +247,19 @@ def game_run():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
+                
 
-        disp.fill((3,5,6))
+        for x in BG_list:
+            x.update()
 
-        disp.blit(bg,(0,0))
 
         #bird updates
         bird.update()
 
         #pipe updates
-        for x in L:
+        for x in Pipe_list:
             x.update()
+
 
         #clock,disp,iframes update
         pygame.display.update()
@@ -234,11 +279,10 @@ def game_pause_start():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-            
 
             if event.type == pygame.KEYDOWN:
 
-                if event.key==pygame.K_ESCAPE:
+                if event.key == pygame.K_ESCAPE:
                     return True
                 
                 #run the game if this
@@ -253,4 +297,5 @@ def game_pause_start():
 
         disp.fill((70,70,70))
         pygame.display.update()
+        clock.tick(60)
         clock.tick(60)
