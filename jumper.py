@@ -1,4 +1,83 @@
-import pygame , os , sys
+import pygame
+import os 
+def menu():
+    global player1type,player2type
+    width = 800
+    height = 600 
+    pygame.init()
+    fps = pygame.time.Clock()    
+    window = pygame.display.set_mode((width,height))
+    backgroundimage = pygame.transform.scale(pygame.image.load('assets/jumper_assets/bgimgmenu.jpg'),(width,height))
+    defaultfont = pygame.font.Font("assets/pixel_font.ttf",19)
+    def drawtext(text,font,x,y,colour = (44,39,133)):
+        box = font.render(text,True,colour)
+
+        window.blit(box,(x,y))
+        boxrect = box.get_rect()
+        print(boxrect)
+    class Button:
+        #init function is given to get the attributes of the button
+        def __init__(self,path1,position) -> None:
+            self.image=pygame.image.load(path1).convert_alpha()
+            self.image = pygame.transform.scale(self.image,(120,140))
+            self.rect=self.image.get_rect(topleft=position)
+        #drawing , hovering and clicking logic
+        def draw(self):
+            mouse_pos=pygame.mouse.get_pos()
+            window.blit(self.image,self.rect)
+            if self.rect.collidepoint(mouse_pos):
+                if True in pygame.mouse.get_pressed():
+                    return True
+    
+    adboy_p1 = Button(path1= r"assets/jumper_assets/Characters/Adboy/Player_Sprite_Walking/Run (1).png",position=(50,100))
+    robot_p1 = Button(path1= r"assets/jumper_assets/Characters/Robot/Player_Sprite_Walking/Run (1).png",position=(50,250))
+    ninjagirl_p1 = Button(path1= r"assets/jumper_assets/Characters/Ninjagirl/Player_Sprite_Walking/Run__000.png",position=(50,400))
+    adboy_p2 = Button(path1= r"assets/jumper_assets/Characters/Adboy/Player_Sprite_Walking/Run (1).png",position=(500,100))
+    robot_p2 = Button(path1= r"assets/jumper_assets/Characters/Robot/Player_Sprite_Walking/Run (1).png",position=(500,250))
+    ninjagirl_p2 = Button(path1= r"assets/jumper_assets/Characters/Ninjagirl/Player_Sprite_Walking/Run__000.png",position=(500,400))
+    
+    player1type = " "
+    player2type = " "
+
+    while True:
+        window.blit(backgroundimage,(0,0))
+        for event in pygame.event.get():    #to quit the game
+            if event.type==pygame.QUIT:
+                pygame.quit()
+        keypressed = pygame.key.get_pressed()
+        if keypressed[pygame.K_SPACE]:
+            break
+        isadboy = adboy_p1.draw()
+        isrobot = robot_p1.draw()
+        isninjagirl = ninjagirl_p1.draw()
+        isadboy2 = adboy_p2.draw()
+        isrobot2= robot_p2.draw()
+        isninjagirl2 = ninjagirl_p2.draw()
+    
+        if isadboy :
+            player1type = "Adboy"
+        if isrobot :
+            player1type = "Robot"
+        if isninjagirl:
+            player1type = "Ninjagirl"
+        if isadboy2 :
+
+            player2type = "Adboy"
+        if isrobot2 :
+            player2type = "Robot"
+        if isninjagirl2:
+            player2type = "Ninjagirl"
+        
+
+        drawtext(text = f"Selected : {player1type}",font=defaultfont,x=0,y=0)
+        drawtext(text = f"Selected : {player2type}",font=defaultfont,x=400,y=0)
+        drawtext(text = "Press Space to Play Game",font = defaultfont,x = 170,y = 560,colour=(255,255,255))
+
+
+        pygame.display.update()
+    game()
+
+    
 
 def game():  
     pygame.init() 
@@ -8,7 +87,8 @@ def game():
     height = 600
     recoilvelocity = 7
 
-    defaultfont = pygame.font.SysFont("Bahnschrift",30)
+    defaultfont = pygame.font.Font("assets/pixel_font.ttf",18)
+
 
     def shootsound(filename):
         global bulletsound 
@@ -16,37 +96,32 @@ def game():
     shootsound("gunshot")
     running = True
     walking = False
-    walkimglist=[]
-    idleimglist=[]
-    normalattackimglist=[]
-    for image in os.listdir("assets/jumper_assets/Characters/Beeda Bro/Player_Sprite_Walking"):
-        walkimglist.append(image)
-    for image in os.listdir("assets/jumper_assets/Characters/Beeda Bro/Player_Sprite_Idle"):
-        idleimglist.append(image)
-    for image in os.listdir("assets/jumper_assets/Characters/Beeda Bro/Player_Sprite_NormalAttack"):
-        normalattackimglist.append(image)
-    projectileimg = "assets/jumper_assets/bullet.png"
+
+   
+
 
     class Bullets(pygame.sprite.Sprite):
         
-        def __init__(self,player,playerside):
+        def __init__(self,player,playerside,playertype):
             super().__init__()
-            self.image = pygame.transform.scale(pygame.image.load(f"assets/jumper_assets/Projectiles/{projectileimg}"),(50,10)).convert_alpha()
+            self.characterbullet = playertype
+            self.image = pygame.transform.scale(pygame.image.load(f"assets/jumper_assets/Projectiles/{self.characterbullet}/bullet.png"),(50,15)).convert_alpha()
             self.direction = playerside
+            
             self.origin = player
             self.rect = self.image.get_rect()
             if self.direction == "right":
-                self.rect.left = player.rect.right + 5 
+                self.rect.left = player.rect.right
                 self.rect.centery = player.rect.centery
             if self.direction == "left":
-                self.rect.left = player.rect.left-30 
+                self.rect.left = player.rect.left
                 self.rect.centery = player.rect.centery
                 self.image = pygame.transform.flip(self.image, True, False)
         def update(self):
             if self.direction == "right":
-                self.rect.centerx +=20
+                self.rect.centerx +=15
             if self.direction=="left":
-                self.rect.centerx-=20
+                self.rect.centerx-=15
 
             if self.rect.left>width+100:
                 self.kill()
@@ -89,9 +164,21 @@ def game():
             self.rect = self.image.get_rect(center = (x,y))
 
     class player(pygame.sprite.Sprite):
+        
 
         
-        def __init__(self,x,y):
+        def __init__(self,x,y,playertype):
+            walkimglist = []
+            idleimglist=[]
+            normalattackimglist = []
+            self.character = playertype
+            for image in os.listdir(f"assets/jumper_assets/Characters/{self.character}/Player_Sprite_Walking"):
+                walkimglist.append(image)
+            for image in os.listdir(f"assets/jumper_assets/Characters/{self.character}/Player_Sprite_Idle"):
+                idleimglist.append(image)
+            for image in os.listdir(f"assets/jumper_assets/Characters/{self.character}/Player_Sprite_NormalAttack"):
+                normalattackimglist.append(image)
+            
             self.health = 100
             self.lives = 5
             self.score = 0 
@@ -109,12 +196,12 @@ def game():
             self.listofwalkingimages = walkimglist
             self.listofidleimages = idleimglist
             self.listofnormalattackimages = normalattackimglist
-            self.image = pygame.image.load(fr"assets/jumper_assets/Characters/Beeda Bro/Player_Sprite_Walking/"+self.listofwalkingimages[self.walkspriteno])
-            self.image = pygame.transform.scale(self.image,(90,140))
+            self.image = pygame.image.load(fr"assets/jumper_assets/Characters/{self.character}/Player_Sprite_Walking/"+self.listofwalkingimages[self.walkspriteno])
+            self.image = pygame.transform.scale(self.image,(100,140))
             
             self.rect = self.image.get_rect()
             self.rect.centerx = x
-            self.rect.centery = y
+            self.rect.bottom = height
         def makeplayerfallwhennotonablock(self):
         
             if self.falling == True:
@@ -129,9 +216,10 @@ def game():
         def jumpaction(self):
             nonlocal height,player1
             afunctiontodealwithdumbcollisions()
+            self.image = pygame.transform.scale(self.image,(100,140))
             if self.side !=self.tempside:
-                self.image = pygame.transform.scale(player1.image,(90,140))
-                self.image = pygame.transform.flip(player1.image, True, False)
+                self.image = pygame.transform.scale(self.image,(100,140))
+                self.image = pygame.transform.flip(self.image, True, False)
             
             if self.jumping == True:
                 self.rect.bottom -=self.jumpspeed
@@ -142,15 +230,18 @@ def game():
             self.tempside = self.side
         
         def walkinganimation(self):
-            if 0<=self.walkspriteno<len(walkimglist) and not self.jumping:
+            if 0<=self.walkspriteno<len(self.listofwalkingimages) and not self.jumping:
                 posx = self.rect.centerx
                 posy = self.rect.centery
-                self.image = pygame.image.load(r"assets/jumper_assets/Characters/Beeda Bro/Player_Sprite_Walking/"+self.listofwalkingimages[int(self.walkspriteno)]).convert_alpha()
-                self.image = pygame.transform.scale(self.image,(90,140))
+                
+                self.image = pygame.image.load(fr"assets/jumper_assets/Characters/{self.character}/Player_Sprite_Walking/"+self.listofwalkingimages[int(self.walkspriteno)]).convert_alpha()
+                self.image = pygame.transform.scale(self.image,(100,140))
                 if self.side == "right":
-                    self.image = pygame.transform.scale(self.image,(90,140))
+                    
+                    self.image = pygame.transform.scale(self.image,(100,140))
                 if self.side == "left":
-                    self.image = pygame.transform.scale(self.image,(90,140))
+                    
+                    self.image = pygame.transform.scale(self.image,(100,140))
                     self.image = pygame.transform.flip(self.image, True, False)
                 self.rect = self.image.get_rect()
                 self.rect.centerx = posx
@@ -160,14 +251,14 @@ def game():
             else:
                 self.walkspriteno = 0
         def normalshootinganimation(self):
-                print(self.normalattackspriteno)
-                if self.isnormalattack==  True and self.normalattackspriteno<=len(normalattackimglist):
-                    self.image = pygame.image.load(r"assets/jumper_assets/Characters/Beeda Bro/Player_Sprite_NormalAttack/"+self.listofnormalattackimages[int(self.normalattackspriteno)]).convert_alpha()
-                    self.image = pygame.transform.scale(self.image,(90,140))
+                self.image = pygame.transform.scale(self.image,(100,140))
+                if self.isnormalattack==  True and self.normalattackspriteno<=len(self.listofnormalattackimages):
+                    self.image = pygame.image.load(fr"assets/jumper_assets/Characters/{self.character}/Player_Sprite_NormalAttack/"+self.listofnormalattackimages[int(self.normalattackspriteno)]).convert_alpha()
+                    self.image = pygame.transform.scale(self.image,(100,140))
                     if self.side == "right":
-                        self.image = pygame.transform.scale(self.image,(90,140))
+                        self.image = pygame.transform.scale(self.image,(100,140))
                     if self.side == "left":
-                        self.image = pygame.transform.scale(self.image,(90,140))
+                        self.image = pygame.transform.scale(self.image,(100,140))
                         self.image = pygame.transform.flip(self.image, True, False)
                     self.normalattackspriteno += 0.8
                 else :
@@ -180,21 +271,21 @@ def game():
             
             
         def idleanimation(self):
-        
+                self.image = pygame.transform.scale(self.image,(100,140))
                 if not walking and not self.jumping:
-                    self.idlespriteno+=0.1
-                    if self.idlespriteno<len(idleimglist):
+                    self.idlespriteno+=0.3
+                    if self.idlespriteno<len(self.listofidleimages):
                         posx = self.rect.centerx
-                        posy = self.rect.centery
-                        self.image = pygame.image.load(r"assets/jumper_assets/Characters/Beeda Bro/Player_Sprite_Idle/"+ self.listofidleimages[int(self.idlespriteno)]).convert_alpha()
+                        posy = self.rect.bottom
+                        self.image = pygame.image.load(fr"assets/jumper_assets/Characters/{self.character}/Player_Sprite_Idle/"+ self.listofidleimages[int(self.idlespriteno)]).convert_alpha()
                         if self.side == "right":
-                            self.image = pygame.transform.scale(self.image,(90,140))
+                            self.image = pygame.transform.scale(self.image,(100,140))
                         if self.side == "left":
-                            self.image = pygame.transform.scale(self.image,(90,140))
+                            self.image = pygame.transform.scale(self.image,(100,140))
                             self.image = pygame.transform.flip(self.image, True, False)
                         self.rect = self.image.get_rect()
                         self.rect.centerx = posx
-                        self.rect.centery = posy
+                        self.rect.bottom = posy
                     else:
                         self.idlespriteno=0
 
@@ -215,8 +306,8 @@ def game():
             elif self.side=="left":
                 if self.rect.right<=width:
                     self.rect.centerx+=recoilvelocity
-    player1 = player(30,600)
-    player2 = player(400,600)
+    player1 = player(30,600,playertype=player1type)
+    player2 = player(400,600,playertype=player2type)
     block1 = Blocks(650,400)
     block2 = Blocks(150,400)
     block3 = Blocks(400,300)
@@ -352,7 +443,7 @@ def game():
             noofshiftpresses1+=1
             if noofshiftpresses1>=4:
 
-                bulletsgrp.add(Bullets(player=player1,playerside=player1.side))
+                bulletsgrp.add(Bullets(player=player1,playerside=player1.side,playertype=player1type))
                 noofshiftpresses1 = 0 
                 bulletsound.play()
                 player1.recoilplayer()
@@ -381,7 +472,6 @@ def game():
             if player1.rect.left>=0  and True not in stopleft1 :
                 player1.rect.centerx-=15
             
-        #whyyy
         else:
             if keypressed[pygame.K_d]==False:
             
@@ -391,7 +481,7 @@ def game():
         if keypressed[pygame.K_RSHIFT]:
             noofshiftpresses2+=1
             if noofshiftpresses2>=4:
-                bulletsgrp.add(Bullets(player=player2,playerside=player2.side))
+                bulletsgrp.add(Bullets(player=player2,playerside=player2.side,playertype=player2type))
                 noofshiftpresses2 = 0 
                 bulletsound.play()
                 player2.recoilplayer()
@@ -432,14 +522,12 @@ def game():
     backgroundimage = pygame.transform.scale(pygame.image.load('assets/jumper_assets/bgimg.jpg'),(width,height))
 
     while running:
+        
         gamescreen.blit(backgroundimage,(0,0))
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit
-                sys.exit()
-            elif event.type == pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
-                return True
+                running = False  
         #Getting the key pressed 
         keypressed = pygame.key.get_pressed() 
         #Drawing the various sprites on the screen
@@ -471,7 +559,7 @@ def game():
             player1.makeplayerfallwhennotonablock()
             player1.checkhealth()
             player1.normalshootinganimation()
-            
+        
         #Rendering animations and movements for player2 if it is alive
         if player2.lives>0:
             pygame.draw.rect(gamescreen,(255,0,0),bg2)
@@ -483,18 +571,17 @@ def game():
             player2.checkhealth()
             player2.normalshootinganimation()
         
-        
-        
-        
+    
         bulletsgrp.update()
         #dont render everytime 
         #Drawing player health and lives left
-        drawtext(f"Player 1 health:{player1.health}",defaultfont,10,0)
-        drawtext(f"Player 2 health:{player2.health}",defaultfont,530,0)
+        drawtext(f"Player 1 health:{player1.health}",defaultfont,10,0,)
+        drawtext(f"Player 2 health:{player2.health}",defaultfont,450,0)
         drawtext(f"No of lives left:{player1.lives}",defaultfont,10,40)
-        drawtext(f"No of lives left:{player2.lives}",defaultfont,530,40)
+        drawtext(f"No of lives left:{player2.lives}",defaultfont,450,40)
         
         for abullet in bulletsgrp:
             abullet.checkhitplayer()
         pygame.display.flip()
         fps.tick(60)   
+    pygame.quit()
