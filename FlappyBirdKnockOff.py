@@ -6,6 +6,7 @@ pygame.init()
 disp = pygame.display.set_mode((900,600), pygame.RESIZABLE )
 clock = pygame.time.Clock()
 pygame.display.set_caption('FlappyBirdKnockOff')
+bg = pygame.transform.scale(pygame.image.load('assets/flappy_assets/bg.jpg'), (900,600))
 #pygame.display.set_icon()
 
 #bird class
@@ -205,6 +206,8 @@ def game_run():
                 sys.exit()
 
         disp.fill((3,5,6))
+
+        disp.blit(bg,(0,0))
 
         #bird updates
         bird.update()
