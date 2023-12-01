@@ -150,8 +150,12 @@ class Pipe:
         self.pipedraw()
         self.pipe_collisions(bird)
 
+
+
+#BG class
 first_few_initializing_bg_counter=0
-class Moving:
+class MovingBG:
+    
     def __init__(self):
         global bg_pos_start, first_few_initializing_bg_counter
         self.image = pygame.transform.scale(pygame.image.load('assets/flappy_assets/bg.jpg'),pygame.display.get_window_size())
@@ -167,7 +171,7 @@ class Moving:
         if self.rect.x <= -3600:
             bg_pos_start = (pygame.Surface.get_width(self.image)+BG_list[-1].rect.topleft[0]-5, BG_list[-1].rect.topleft[-1])
             BG_list.remove(self)
-            BG_list.append(Moving())
+            BG_list.append(MovingBG())
             print(BG_list)
     
     def bg_move(self):
@@ -223,8 +227,8 @@ def new_game():
     #redoing/assigning objects
     first_few_initializing_bg_counter=0
     bg_pos_start = (0,0)
-    BG_list = [Moving() for x in range(5)]
-    points =0
+    BG_list = [MovingBG() for x in range(5)]
+    points = 0
     pipe_obj_x_dist = newgame_x_dist
     Pipe_list =[Pipe() for x in range(6)]
     bird = Bird()
