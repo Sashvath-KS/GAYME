@@ -13,9 +13,6 @@ def starting():
     pygame.display.set_icon(pygame.image.load('assets/flappy_assets/bird_icon.png').convert_alpha())
     quit_game = False
 
-    #music
-    
-
     #images for the buttons in the menu screen for flappy
     start_button_image = pygame.image.load('assets/flappy_assets/start_button.png').convert_alpha()
     start_button_image = pygame.transform.scale(start_button_image, (202,120))
@@ -162,7 +159,7 @@ class Pipe:
             
         #if the bird collides with the hitbox and its invincibility frames are over 70 then a point is 
         #granted(if iframes not there then multiple points granted which is not cool)
-        if (bird.rect.colliderect(self.hb_rect) and iframes >= 70):
+        if (bird.rect.colliderect(self.hb_rect) and iframes >= 50):
             points +=1
             iframes = 0
 
@@ -389,6 +386,7 @@ def game_run():
 def game_pause_start():
     global collided_with_pipes, points, start_game
 
+    #music
     mixer.music.load('assets/flappy_assets/stay_at_your_house.mp3')
     mixer.music.set_volume(0.05)
     mixer.music.play(-1)
@@ -423,5 +421,4 @@ def game_pause_start():
         pygame.display.update()
         clock.tick(60)
 
-
-#game_pause_start()
+game_pause_start()
