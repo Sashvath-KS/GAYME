@@ -420,5 +420,3 @@ def game_pause_start():
         #display update and framerate
         pygame.display.update()
         clock.tick(60)
-
-game_pause_start()
