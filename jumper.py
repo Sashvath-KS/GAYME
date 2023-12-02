@@ -29,13 +29,14 @@ def menu():
                 if True in pygame.mouse.get_pressed():
                     return True
     
-    adboy_p1 = Button(path1= r"assets/jumper_assets/Characters/Adboy/Player_Sprite_Walking/Run (1).png",position=(50,100))
-    robot_p1 = Button(path1= r"assets/jumper_assets/Characters/Robot/Player_Sprite_Walking/Run (1).png",position=(50,250))
-    ninjagirl_p1 = Button(path1= r"assets/jumper_assets/Characters/Ninjagirl/Player_Sprite_Walking/Run__000.png",position=(50,400))
-    adboy_p2 = Button(path1= r"assets/jumper_assets/Characters/Adboy/Player_Sprite_Walking/Run (1).png",position=(500,100))
-    robot_p2 = Button(path1= r"assets/jumper_assets/Characters/Robot/Player_Sprite_Walking/Run (1).png",position=(500,250))
-    ninjagirl_p2 = Button(path1= r"assets/jumper_assets/Characters/Ninjagirl/Player_Sprite_Walking/Run__000.png",position=(500,400))
-    
+    adboy_p1 = Button(path1= r"assets/jumper_assets/Characters/Adboy/Player_Sprite_Walking/Run (1).png",position=(50,10))
+    robot_p1 = Button(path1= r"assets/jumper_assets/Characters/Robot/Player_Sprite_Walking/Run (1).png",position=(50,150))
+    ninjagirl_p1 = Button(path1= r"assets/jumper_assets/Characters/Ninjagirl/Player_Sprite_Walking/Run__000.png",position=(50,300))
+    beedabro_p1 = Button(path1= r"assets/jumper_assets/Characters/Beeda Bro/Player_Sprite_Walking/1.jpg",position=(50,450))
+    adboy_p2 = Button(path1= r"assets/jumper_assets/Characters/Adboy/Player_Sprite_Walking/Run (1).png",position=(500,10))
+    robot_p2 = Button(path1= r"assets/jumper_assets/Characters/Robot/Player_Sprite_Walking/Run (1).png",position=(500,150))
+    ninjagirl_p2 = Button(path1= r"assets/jumper_assets/Characters/Ninjagirl/Player_Sprite_Walking/Run__000.png",position=(500,300))
+    beedabro_p2 = Button(path1= r"assets/jumper_assets/Characters/Beeda Bro/Player_Sprite_Walking/1.jpg",position=(500,450))
     player1type = " "
     player2type = " "
 
@@ -50,6 +51,8 @@ def menu():
         isadboy = adboy_p1.draw()
         isrobot = robot_p1.draw()
         isninjagirl = ninjagirl_p1.draw()
+        isbeedabro = beedabro_p1.draw()
+        isbeedabro2 = beedabro_p2.draw()
         isadboy2 = adboy_p2.draw()
         isrobot2= robot_p2.draw()
         isninjagirl2 = ninjagirl_p2.draw()
@@ -60,6 +63,8 @@ def menu():
             player1type = "Robot"
         if isninjagirl:
             player1type = "Ninjagirl"
+        if isbeedabro:
+            player1type = "Beeda Bro"
         if isadboy2 :
 
             player2type = "Adboy"
@@ -67,6 +72,8 @@ def menu():
             player2type = "Robot"
         if isninjagirl2:
             player2type = "Ninjagirl"
+        if isbeedabro2:
+            player2type = "Beeda Bro"
         
 
         drawtext(text = f"Selected : {player1type}",font=defaultfont,x=0,y=0)
@@ -77,7 +84,7 @@ def menu():
         pygame.display.update()
     game()
 
-    
+
 
 def game():  
     pygame.init() 
