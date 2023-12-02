@@ -424,4 +424,3 @@ def game_pause_start():
 
 
 
-game_pause_start()
