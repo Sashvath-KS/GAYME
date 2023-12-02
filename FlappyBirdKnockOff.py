@@ -1,6 +1,8 @@
 import pygame, sys, random, pickle
+from pygame import mixer
 
 pygame.init()
+pygame.mixer.init()
 
 def starting():
     global disp, clock, og_disp, quit_button_image, start_button_image, reset_button_image, quit_button_rect, start_button_rect, quit_game, reset_button_rect
@@ -9,8 +11,10 @@ def starting():
     clock = pygame.time.Clock()
     pygame.display.set_caption('FlappyBirdKnockOff')
     pygame.display.set_icon(pygame.image.load('assets/flappy_assets/bird_icon.png').convert_alpha())
-    #og_disp = pygame.display.get_window_size()                              #og disp to resize if needed later
     quit_game = False
+    mixer.music.load('assets/flappy_assets/stay_at_your_house.mp3')
+    mixer.music.set_volume(0.05)
+    mixer.music.play(-1)
 
     #images for the buttons in the menu screen for flappy
     start_button_image = pygame.image.load('assets/flappy_assets/start_button.png').convert_alpha()
@@ -196,18 +200,10 @@ class MovingBG:
     def display_on_screen(self):
         disp.blit(self.image,self.rect)
 
-    #def resize(self):
-    #    global og_disp
-    #    if og_disp != pygame.display.get_window_size():
-    #        og_disp = pygame.display.get_window_size()
-    #        for x in BG_list:
-    #            x.image = pygame.transform.scale(pygame.image.load('bg.png'),pygame.display.get_window_size())
-
     def update(self):
         self.bg_move()
         self.out_of_bounds()
         self.display_on_screen()
-        #self.resize()
 
 
 
@@ -421,6 +417,5 @@ def game_pause_start():
         #display update and framerate
         pygame.display.update()
         clock.tick(60)
-
 
 
