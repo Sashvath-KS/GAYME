@@ -5,28 +5,28 @@ pygame.init()
 def starting():
     global disp, clock, og_disp, quit_button_image, start_button_image, reset_button_image, quit_button_rect, start_button_rect, quit_game, reset_button_rect
     #display, clock(frames per second), caption, icon, bg
-    disp = pygame.display.set_mode((900,600), pygame.RESIZABLE)
+    disp = pygame.display.set_mode((900,600))
     clock = pygame.time.Clock()
     pygame.display.set_caption('FlappyBirdKnockOff')
-    pygame.display.set_icon(pygame.image.load('assets/flappy_assets/bird_icon.png'))
-    og_disp = pygame.display.get_window_size()                              #og disp to resize if needed later
+    pygame.display.set_icon(pygame.image.load('assets/flappy_assets/bird_icon.png').convert_alpha())
+    #og_disp = pygame.display.get_window_size()                              #og disp to resize if needed later
     quit_game = False
 
     #images for the buttons in the menu screen for flappy
-    start_button_image = pygame.image.load('assets/flappy_assets/start_button.png')
+    start_button_image = pygame.image.load('assets/flappy_assets/start_button.png').convert_alpha()
     start_button_image = pygame.transform.scale(start_button_image, (202,120))
 
-    quit_button_image = pygame.image.load('assets/flappy_assets/quit_button.png')
+    quit_button_image = pygame.image.load('assets/flappy_assets/quit_button.png').convert_alpha()
     quit_button_image = pygame.transform.scale(quit_button_image, (202,119))
 
-    reset_button_image = pygame.image.load('assets/flappy_assets/reset_button.png')
+    reset_button_image = pygame.image.load('assets/flappy_assets/reset_button.png').convert_alpha()
     reset_button_image = pygame.transform.scale(reset_button_image, (200,121))
 
 
     #rectangles for the respective buttons
-    start_button_rect = start_button_image.get_rect(midbottom = (450,350))
-    quit_button_rect = quit_button_image.get_rect(midbottom = (200,550))
-    reset_button_rect = reset_button_image.get_rect(midbottom = (700,550))
+    start_button_rect = start_button_image.get_rect(midbottom = (446,530))
+    quit_button_rect = quit_button_image.get_rect(midbottom = (150,390))
+    reset_button_rect = reset_button_image.get_rect(midbottom = (750,390))
 
 
 #bird class
@@ -34,7 +34,7 @@ class Bird():
 
     def __init__(self):
         #getting the image,rect and transforming it
-        self.image = pygame.image.load('assets/flappy_assets/bird.png')
+        self.image = pygame.image.load('assets/flappy_assets/bird.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (50,60))
         self.rect = self.image.get_rect(midbottom = (450,300))
         #to make sure bird doesnt fly 'fly'
@@ -96,16 +96,16 @@ class Pipe:
         
 
         #pipe1(upper)
-        self.pipe1 = pygame.transform.flip(pygame.image.load('assets/flappy_assets/pipe.png'),False, True)
+        self.pipe1 = pygame.transform.flip(pygame.image.load('assets/flappy_assets/pipe.png').convert_alpha(),False, True)
         self.pipe1_rect = self.pipe1.get_rect(midbottom = (pipe_obj_x_dist,self.y))
 
         #pipe2(bottom)
-        self.pipe2 = pygame.image.load('assets/flappy_assets/pipe.png')
+        self.pipe2 = pygame.image.load('assets/flappy_assets/pipe.png').convert_alpha()
         self.pipe2_rect = self.pipe2.get_rect(midtop = (pipe_obj_x_dist,self.y+200)) #y is offset by 200 to position it wrt
                                                                             #the first pipe(this is the space that the bird passes through)
 
         #hitbox
-        self.hitbox = pygame.image.load('assets/flappy_assets/powtf.jpg')         #just a placeholder image for the space between the pipes for collision
+        self.hitbox = pygame.image.load('assets/flappy_assets/powtf.jpg').convert_alpha()      #just a placeholder image for the space between the pipes for collision
         self.hitbox = pygame.transform.scale(self.hitbox,(100,90))
         self.hb_rect = self.hitbox.get_rect(midtop =(pipe_obj_x_dist,self.y))
 
@@ -171,10 +171,10 @@ class Pipe:
 
 
 #bg class
-class Moving:
+class MovingBG:
     def __init__(self):
         global bg_pos_start, first_few_initializing_bg_counter
-        self.image = pygame.transform.scale(pygame.image.load('assets/flappy_assets/bg.png'),pygame.display.get_window_size())
+        self.image = pygame.transform.scale(pygame.image.load('assets/flappy_assets/bg.png').convert_alpha(), pygame.display.get_window_size())
         self.rect = self.image.get_rect(topleft =bg_pos_start)
         if first_few_initializing_bg_counter<= 5:
             bg_pos_start = (pygame.Surface.get_width(self.image)+bg_pos_start[0]-5,0)
@@ -187,7 +187,7 @@ class Moving:
         if self.rect.x <= -3600:
             bg_pos_start = (pygame.Surface.get_width(self.image)+BG_list[-1].rect.topleft[0]-5, BG_list[-1].rect.topleft[-1])
             BG_list.remove(self)
-            BG_list.append(Moving())
+            BG_list.append(MovingBG())
             print(BG_list)
     
     def bg_move(self):
@@ -196,18 +196,18 @@ class Moving:
     def display_on_screen(self):
         disp.blit(self.image,self.rect)
 
-    def resize(self):
-        global og_disp
-        if og_disp != pygame.display.get_window_size():
-            og_disp = pygame.display.get_window_size()
-            for x in BG_list:
-                x.image = pygame.transform.scale(pygame.image.load('bg.png'),pygame.display.get_window_size())
+    #def resize(self):
+    #    global og_disp
+    #    if og_disp != pygame.display.get_window_size():
+    #        og_disp = pygame.display.get_window_size()
+    #        for x in BG_list:
+    #            x.image = pygame.transform.scale(pygame.image.load('bg.png'),pygame.display.get_window_size())
 
     def update(self):
         self.bg_move()
         self.out_of_bounds()
         self.display_on_screen()
-        self.resize()
+        #self.resize()
 
 
 
@@ -267,7 +267,7 @@ def new_game():
 
     first_few_initializing_bg_counter=0             #to initialise a few bg counter
     bg_pos_start = (0,0)                            #bg pos var
-    BG_list = [Moving() for x in range(5)]          #list containing the bgs
+    BG_list = [MovingBG() for x in range(5)]          #list containing the bgs
 
     points =0           #normal points to be reset when game begins
 
@@ -318,21 +318,26 @@ def start_menu():
 
 def disp_text_points(menu = False, game = False):
 
-    #font for text
-    font_text = pygame.font.Font('assets/flappy_assets/UNISPACE_BD.ttf', 52)
-
-    #menu and game texts 
-    menu_text = font_text.render(f'HIGH SCORE:{points_file(High_read = True)} ',False, 'magenta')
-    game_text = font_text.render(f'SCORE:{points_file(current_score = True)} ',False, 'yellow')
-
     #only for menu disp menu_text
     if menu == True:
-        return disp.blit(menu_text, (100,100))
+        #font for text
+        font_text = pygame.font.Font('assets/flappy_assets/UNISPACE_BD.ttf', 30)
+        #menu text
+        menu_text = font_text.render(f'HIGH SCORE:{points_file(High_read = True)} ',False, 'magenta')
+
+        disp.blit(menu_text, (620,220))
     
     #for game disp both menu_text and game_text
     if game == True:
-         disp.blit(game_text,(0,0))
-         disp.blit(menu_text, (0,52))
+        #font for text
+        font_text = pygame.font.Font('assets/flappy_assets/UNISPACE_BD.ttf', 52)
+
+        #menu and game texts 
+        menu_text = font_text.render(f'HIGH SCORE:{points_file(High_read = True)} ',False, 'magenta')
+        game_text = font_text.render(f'SCORE:{points_file(current_score = True)} ',False, 'green')
+
+        disp.blit(game_text,(0,52))
+        disp.blit(menu_text, (0,0))
 
 
 
@@ -419,3 +424,4 @@ def game_pause_start():
 
 
 
+game_pause_start()
