@@ -111,6 +111,7 @@ def main_menu():
             return jumper.game()
         
         elif button3.draw():
+            bgm.stop()
             return FlappyBirdKnockOff.game_pause_start()
         
         elif button4.draw():

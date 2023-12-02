@@ -6,15 +6,15 @@ pygame.mixer.init()
 
 def starting():
     global disp, clock, og_disp, quit_button_image, start_button_image, reset_button_image, quit_button_rect, start_button_rect, quit_game, reset_button_rect
-    #display, clock(frames per second), caption, icon, bg
+    #display, clock(frames per second), caption, icon, bg, quit
     disp = pygame.display.set_mode((900,600))
     clock = pygame.time.Clock()
-    pygame.display.set_caption('FlappyBirdKnockOff')
+    pygame.display.set_caption('FlappyMan')
     pygame.display.set_icon(pygame.image.load('assets/flappy_assets/bird_icon.png').convert_alpha())
     quit_game = False
-    mixer.music.load('assets/flappy_assets/stay_at_your_house.mp3')
-    mixer.music.set_volume(0.05)
-    mixer.music.play(-1)
+
+    #music
+    
 
     #images for the buttons in the menu screen for flappy
     start_button_image = pygame.image.load('assets/flappy_assets/start_button.png').convert_alpha()
@@ -389,6 +389,10 @@ def game_run():
 def game_pause_start():
     global collided_with_pipes, points, start_game
 
+    mixer.music.load('assets/flappy_assets/stay_at_your_house.mp3')
+    mixer.music.set_volume(0.05)
+    mixer.music.play(-1)
+
     starting()
     while True:
 
@@ -396,6 +400,7 @@ def game_pause_start():
 
             #if the player wishes to opt out using the X or Escape
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key ==pygame.K_ESCAPE) or quit_game:
+                mixer.music.stop()
                 return True
 
         #new_game() is now initialized here so that it doesnt mess with start_menu() as start_menu needs a few variables
@@ -419,3 +424,4 @@ def game_pause_start():
         clock.tick(60)
 
 
+#game_pause_start()
