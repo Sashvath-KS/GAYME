@@ -88,8 +88,8 @@ def menu():
 
 
         pygame.display.update()
-    
-menu()
+    game()
+
 def game():  
     pygame.init() 
     blockheight = 50
@@ -608,3 +608,4 @@ def game():
         pygame.display.flip()
         fps.tick(60)   
     pygame.quit()
+menu()

@@ -8,9 +8,9 @@ def menu():
     #pygame.init()
     fps = pygame.time.Clock()    
     window = pygame.display.set_mode((width,height))
-    backgroundimage = pygame.transform.scale(pygame.image.load('assets/jumper_assets/bgimgmenu.jpeg'),(width,height))
+    backgroundimage = pygame.transform.scale(pygame.image.load('assets/jumper_assets/bgimgmenu.jpg'),(width,height))
     defaultfont = pygame.font.Font("assets/pixel_font.ttf",19)
-    def drawtext(text,font,x,y,colour = (44,39,133)):
+    def drawtext(text,font,x,y,colour = (255,255,255)):
         box = font.render(text,True,colour)
 
         window.blit(box,(x,y))
@@ -37,7 +37,7 @@ def menu():
     adboy_p2 = Button(path1= r"assets/jumper_assets/Characters/Adboy/Player_Sprite_Walking/Run (1).png",position=(500,10))
     robot_p2 = Button(path1= r"assets/jumper_assets/Characters/Robot/Player_Sprite_Walking/Run (1).png",position=(500,150))
     ninjagirl_p2 = Button(path1= r"assets/jumper_assets/Characters/Ninjagirl/Player_Sprite_Walking/Run__000.png",position=(500,300))
-    beedabro_p2 = Button(path1= r"assets/jumper_assets/Characters/Beeda Bro/Player_Sprite_Walking/1.jpg",position=(500,450))
+    beedabro_p2 = Button(path1= r"assets/jumper_assets/Characters/Beeda Bro/Player_Sprite_Walking/1.png",position=(500,450))
     player1type = " "
     player2type = " "
 
@@ -441,7 +441,7 @@ def game():
                 stopleft2.append(True)
             else :
                 stopleft2.append(False)
-    def drawtext(text,font,x,y,colour = (0,0,0)):
+    def drawtext(text,font,x,y,colour = (255,255,255)):
         box = font.render(text,True,colour)
         gamescreen.blit(box,(x,y))
         
@@ -531,7 +531,7 @@ def game():
             
                 walking = False
 
-    backgroundimage = pygame.transform.scale(pygame.image.load('assets/jumper_assets/bgimg.jpeg'),(width,height))
+    backgroundimage = pygame.transform.scale(pygame.image.load('assets/jumper_assets/bgimg.jpg'),(width,height))
 
     while running:
         
@@ -601,3 +601,4 @@ def game():
         fps.tick(60)   
     return True
     #pygame.quit()
+menu()
