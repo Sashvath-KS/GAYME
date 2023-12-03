@@ -6,8 +6,8 @@ pygame.init()
 pygame.mixer.init()
 
 #window and its attributes
-window_width=1400
-window_height=800
+window_width=900
+window_height=514
 window_size=(window_width,window_height)
 window=pygame.display.set_mode(window_size)
 
@@ -48,8 +48,8 @@ def opening_screen():
     b_flag=True
     
     #button attributes and button definition 
-    button_xpos=700
-    button_ypos=400
+    button_xpos=window_width//2
+    button_ypos=window_height//2
     button1=Button('assets/menu_assets/start1.png',(button_xpos,button_ypos),'assets/menu_assets/start1.png')
     button2=Button('assets/menu_assets/start2.png',(button_xpos,button_ypos),'assets/menu_assets/start1.png')
     
@@ -89,15 +89,15 @@ def main_menu():
     background=pygame.image.load('assets/menu_assets/background.jpg').convert_alpha()
     
     #to create 4 buttons
-    h=160
-    kalahalla_button=Button('assets/menu_assets/kalahalla1.png',(450,h),'assets/menu_assets/kalahalla2.png')
-    flappy_button=Button('assets/menu_assets/flappy1.png',(900,h),'assets/menu_assets/flappy2.png')
-    spidercar_button=Button('assets/menu_assets/spidercar1.png',(450,2*h),'assets/menu_assets/spidercar2.png')
-    pong_button=Button('assets/menu_assets/pong1.png',(900,2*h),'assets/menu_assets/pong2.png')
-    shooter_button=Button('assets/menu_assets/shooter1.png',(450,3*h),'assets/menu_assets/shooter2.png')
-    tictactoe_button=Button('assets/menu_assets/tictactoe1.png',(900,3*h),'assets/menu_assets/tictactoe2.png')
-    dino_button=Button('assets/menu_assets/dino1.png',(450,4*h),'assets/menu_assets/dino2.png')
-    back_button=Button('assets/menu_assets/back1.png',(900,4*h),'assets/menu_assets/back2.png')
+    h=int(160*(2/3))
+    kalahalla_button=Button('assets/menu_assets/kalahalla1.png',(300,h),'assets/menu_assets/kalahalla2.png')
+    flappy_button=Button('assets/menu_assets/flappy1.png',(600,h),'assets/menu_assets/flappy2.png')
+    spidercar_button=Button('assets/menu_assets/spidercar1.png',(300,2*h),'assets/menu_assets/spidercar2.png')
+    pong_button=Button('assets/menu_assets/pong1.png',(600,2*h),'assets/menu_assets/pong2.png')
+    shooter_button=Button('assets/menu_assets/shooter1.png',(300,3*h),'assets/menu_assets/shooter2.png')
+    tictactoe_button=Button('assets/menu_assets/tictactoe1.png',(600,3*h),'assets/menu_assets/tictactoe2.png')
+    dino_button=Button('assets/menu_assets/dino1.png',(300,4*h),'assets/menu_assets/dino2.png')
+    back_button=Button('assets/menu_assets/back1.png',(600,4*h),'assets/menu_assets/back2.png')
 
     #main loop of main menu
     while True:
