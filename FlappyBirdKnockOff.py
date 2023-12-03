@@ -175,28 +175,34 @@ class Pipe:
 class MovingBG:
     def __init__(self):
         global bg_pos_start, first_few_initializing_bg_counter
+        #image and rect of the bg images
         self.image = pygame.transform.scale(pygame.image.load('assets/flappy_assets/bg.png').convert_alpha(), pygame.display.get_window_size())
-        self.rect = self.image.get_rect(topleft =bg_pos_start)
+        self.rect = self.image.get_rect(topleft =bg_pos_start)          #its position is kept right after the previous image
+
+        #to initialize the first few pipes
         if first_few_initializing_bg_counter<= 5:
             bg_pos_start = (pygame.Surface.get_width(self.image)+bg_pos_start[0]-5,0)
             first_few_initializing_bg_counter+=1
 
-
+    #to check if the bg is out of bounds
     def out_of_bounds(self):
         global bg_pos_start
 
+        #if so then remove the that bg, get the final images position and add its width with it and make a new bg with the new position
         if self.rect.x <= -3600:
             bg_pos_start = (pygame.Surface.get_width(self.image)+BG_list[-1].rect.topleft[0]-5, BG_list[-1].rect.topleft[-1])
             BG_list.remove(self)
             BG_list.append(MovingBG())
-            print(BG_list)
     
+    #to move the bg 
     def bg_move(self):
         self.rect.x -=5
 
+    #to display the bg
     def display_on_screen(self):
         disp.blit(self.image,self.rect)
 
+    #to update the bg functions
     def update(self):
         self.bg_move()
         self.out_of_bounds()
@@ -257,10 +263,9 @@ def new_game():
     #to start a new game
 
     #redoing/assigning objects
-
     first_few_initializing_bg_counter=0             #to initialise a few bg counter
     bg_pos_start = (0,0)                            #bg pos var
-    BG_list = [MovingBG() for x in range(5)]          #list containing the bgs
+    BG_list = [MovingBG() for x in range(5)]        #list containing the bgs
 
     points =0           #normal points to be reset when game begins
 
@@ -308,7 +313,7 @@ def start_menu():
     disp_text_points(menu = True)
 
 
-
+#to display the text in game and menu
 def disp_text_points(menu = False, game = False):
 
     #only for menu disp menu_text
@@ -318,6 +323,7 @@ def disp_text_points(menu = False, game = False):
         #menu text
         menu_text = font_text.render(f'HIGH SCORE:{points_file(High_read = True)} ',False, 'magenta')
 
+        #displaying
         disp.blit(menu_text, (620,220))
     
     #for game disp both menu_text and game_text
@@ -329,6 +335,7 @@ def disp_text_points(menu = False, game = False):
         menu_text = font_text.render(f'HIGH SCORE:{points_file(High_read = True)} ',False, 'magenta')
         game_text = font_text.render(f'SCORE:{points_file(current_score = True)} ',False, 'green')
 
+        #displaying
         disp.blit(game_text,(0,52))
         disp.blit(menu_text, (0,0))
 
