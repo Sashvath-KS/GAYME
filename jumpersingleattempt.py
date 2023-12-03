@@ -155,6 +155,7 @@ def game():
                 elif self.direction=="left":
                     if player1.rect.left>=0:
                         player1.rect.centerx-=recoilvelocity
+                gamescreen.blit(bloodimg,(self.rect.left,self.rect.centery))
                 self.kill()
             if self.rect.colliderect(player2) and player2.lives>0 and self.origin!=player2: 
                 player2.health-=5
@@ -165,6 +166,7 @@ def game():
                 elif self.direction=="left":
                     if player2.rect.left>=0:
                         player2.rect.centerx-=recoilvelocity
+                gamescreen.blit(bloodimg,(self.rect.right,self.rect.centery))
                 self.kill()
             
                 
@@ -545,6 +547,7 @@ def game():
       
 
     backgroundimage = pygame.transform.scale(pygame.image.load('assets/jumper_assets/bgimg.jpg'),(width,height))
+    bloodimg = pygame.transform.scale(pygame.image.load(r"assets/jumper_assets/blood.png"),(70,70)).convert_alpha()
 
     while running:
         
