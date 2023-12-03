@@ -33,24 +33,24 @@ user = auth.sign_in_with_email_and_password(email, password)
 class Bullets(pygame.sprite.Sprite):
     global player1score
     def __init__(self,y,role):
-            print("fd")
+    
             super().__init__()
-            self.image = pygame.transform.scale(pygame.image.load(r"bullet.png"),(50,10)).convert_alpha()
+            self.image = pygame.transform.scale(pygame.image.load(r"assets/shooter_assets/bullet.png"),(50,10)).convert_alpha()
             self.origin= role
             self.rect = self.image.get_rect()
             if role == "host":
                 self.rect.centery = y
-                self.rect.centerx = hostbox.centerx + 30
+                self.rect.left = hostbox.right
 
             if role == "player":
                 self.rect.centery = y
-                self.rect.centerx = playerbox.centerx - 30
+                self.rect.right = playerbox.left
                
     def update(self):
         if self.origin == "host":
-            self.rect.centerx += 5
+            self.rect.centerx += 30
         if self.origin == "player":
-            self.rect.centerx -= 5
+            self.rect.centerx -= 30
         if self.rect.left>=width:
                  self.kill()
         if self.rect.left<=0:
@@ -59,9 +59,11 @@ class Bullets(pygame.sprite.Sprite):
         global player1score,player2score
         if self.rect.colliderect(hostbox):
             player2score+=1
+            gamescreen.blit(explosionimg,(self.rect.left,self.rect.centery))
             self.kill()
         if self.rect.colliderect(playerbox):
             player1score+=1
+            gamescreen.blit(explosionimg,(self.rect.left,self.rect.centery))
             self.kill()
 
        
@@ -79,6 +81,7 @@ def stremandret():
         hostbox.centery = hostpos[0]   
         if hostpos[1]!=0:
             bulletsgrp.add(Bullets(hostpos[1],role = "host"))
+            
         hostscore = hostpos[2]
     try:
         db.child(str(gameconnectionid)+"host").stream(stream_handler,user.get("idToken"))
@@ -140,8 +143,9 @@ db.child(str(gameconnectionid)+"host").set((100,100,0,0),user.get("idToken"))
 db.child(str(gameconnectionid)+"player").set((100,100,0,0),user.get("idToken"))
 gamescreen = pygame.display.set_mode((width,height), pygame.RESIZABLE)
 defaultfont = pygame.font.Font("assets/pixel_font.ttf",19)
-
-def drawtext(text,font,x,y,colour = (44,39,133)):
+backgroundimage = pygame.transform.scale(pygame.image.load('assets/shooter_assets/bgimg.jpg'),(width+400,height))
+explosionimg = pygame.transform.scale(pygame.image.load(r"assets/shooter_assets/explosion.png"),(50,50)).convert_alpha()
+def drawtext(text,font,x,y,colour = (255,255,255)):
         box = font.render(text,True,colour)
 
         gamescreen.blit(box,(x,y))
@@ -165,20 +169,20 @@ def blit_and_draw_rect():
 
 bulletsgrp = pygame.sprite.Group()
 running = True
-hostimg = pygame.transform.scale((pygame.image.load("assets/shooter_assets/spaceship.png")),(60,90))
-playerimg = pygame.transform.scale((pygame.image.load("assets/shooter_assets/spaceship.png")),(60,90))
+hostimg = pygame.transform.scale((pygame.image.load("assets/shooter_assets/spaceship.png")),(80,90))
+playerimg = pygame.transform.scale((pygame.image.load("assets/shooter_assets/spaceship.png")),(80,90))
 playerimg = pygame.transform.flip(playerimg, True, False)
 hostbox = hostimg.get_rect()
 playerbox = playerimg.get_rect()
-hostbox.left = 0
-playerbox.right = width
+hostbox.left = 10
+playerbox.right = width -10
 bulletpos = 0
 def game():
     global running,height,temp,bulletsgrp,bulletpos
     
     while running:
         
-        gamescreen.fill((255,255,255))
+        gamescreen.blit(backgroundimage,(0,0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -217,6 +221,7 @@ def game():
         
         blit_and_draw_rect()
         bulletsgrp.draw(gamescreen)
+       
         pygame.display.flip()
         fps.tick(60)
         
