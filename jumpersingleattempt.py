@@ -606,4 +606,3 @@ def game():
         pygame.display.flip()
         fps.tick(60)   
     pygame.quit()
-game()

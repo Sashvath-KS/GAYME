@@ -1,13 +1,14 @@
 import pygame
 import os 
+import sys
 def menu():
     global player1type,player2type
     width = 800
     height = 600 
-    pygame.init()
+    #pygame.init()
     fps = pygame.time.Clock()    
     window = pygame.display.set_mode((width,height))
-    backgroundimage = pygame.transform.scale(pygame.image.load('assets/jumper_assets/bgimgmenu.jpg'),(width,height))
+    backgroundimage = pygame.transform.scale(pygame.image.load('assets/jumper_assets/bgimgmenu.jpeg'),(width,height))
     defaultfont = pygame.font.Font("assets/pixel_font.ttf",19)
     def drawtext(text,font,x,y,colour = (44,39,133)):
         box = font.render(text,True,colour)
@@ -45,6 +46,10 @@ def menu():
         for event in pygame.event.get():    #to quit the game
             if event.type==pygame.QUIT:
                 pygame.quit()
+            
+            elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
+                return True
+            
         keypressed = pygame.key.get_pressed()
         if keypressed[pygame.K_SPACE]:
             break
@@ -325,7 +330,7 @@ def game():
     blocksgrp = pygame.sprite.Group()
     player1grp.add([player1,player2])
     blocksgrp.add([block1,block2,block3])
-    backgroundimage = pygame.transform.scale(pygame.image.load('assets/jumper_assets/bgimg.jpg'),(width,height))
+    backgroundimage = pygame.transform.scale(pygame.image.load('assets/jumper_assets/bgimg.jpeg'),(width,height))
     bg1 = pygame.Rect(10,10,100,10)
     fg1= pygame.Rect(10,10,100,10)
     bg2 = pygame.Rect(10,10,100,10)
@@ -526,7 +531,7 @@ def game():
             
                 walking = False
 
-    backgroundimage = pygame.transform.scale(pygame.image.load('assets/jumper_assets/bgimg.jpg'),(width,height))
+    backgroundimage = pygame.transform.scale(pygame.image.load('assets/jumper_assets/bgimg.jpeg'),(width,height))
 
     while running:
         
@@ -534,7 +539,10 @@ def game():
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False  
+                pygame.quit()
+                sys.exit()  
+            elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
+                return True
         #Getting the key pressed 
         keypressed = pygame.key.get_pressed() 
         #Drawing the various sprites on the screen
@@ -591,4 +599,5 @@ def game():
             abullet.checkhitplayer()
         pygame.display.flip()
         fps.tick(60)   
-    pygame.quit()
+    return True
+    #pygame.quit()

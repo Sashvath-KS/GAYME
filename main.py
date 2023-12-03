@@ -1,12 +1,13 @@
 import pygame,sys
-import car_game , jumper ,FlappyBirdKnockOff, ping_pong #, shooter , tictactoe
+import car_game , jumper ,FlappyBirdKnockOff, ping_pong , tictactoe #,shooter
 
 #to start pygame
 pygame.init()
+pygame.mixer.init()
 
 #window and its attributes
-window_width=960
-window_height=503
+window_width=1400
+window_height=800
 window_size=(window_width,window_height)
 window=pygame.display.set_mode(window_size)
 
@@ -22,9 +23,9 @@ class Button:
     #init function is given to get the attributes of the button
     def __init__(self,path1,position,path2) -> None:
         self.image1=pygame.image.load(path1).convert_alpha()
-        self.rect1=self.image1.get_rect(topleft=position)
+        self.rect1=self.image1.get_rect(center=position)
         self.image2=pygame.image.load(path2).convert_alpha()
-        self.rect2=self.image2.get_rect(topleft=position)
+        self.rect2=self.image2.get_rect(center=position)
 
     #drawing , hovering and clicking logic
     def draw(self):
@@ -40,17 +41,17 @@ class Button:
 # opening screen of the game
 def opening_screen():
     
-    background=pygame.image.load('assets/menu_assets/background_1.png').convert_alpha()
+    background=pygame.image.load('assets/menu_assets/background.jpg').convert_alpha()
     
     #to animate the button by changing the image
     b_index=0
     b_flag=True
     
     #button attributes and button definition 
-    button_xpos=385
-    button_ypos=210
-    button1=Button('assets/menu_assets/start2.png',(button_xpos,button_ypos),'assets/menu_assets/start1.png')
-    button2=Button('assets/menu_assets/start3.png',(button_xpos,button_ypos),'assets/menu_assets/start1.png')
+    button_xpos=700
+    button_ypos=400
+    button1=Button('assets/menu_assets/start1.png',(button_xpos,button_ypos),'assets/menu_assets/start1.png')
+    button2=Button('assets/menu_assets/start2.png',(button_xpos,button_ypos),'assets/menu_assets/start1.png')
     
     #to check if the button was clicked
     clicked=False
@@ -85,36 +86,65 @@ def opening_screen():
 #main menu of the game
 def main_menu():
     
-    background=pygame.image.load('assets/menu_assets/background_1.png').convert_alpha()
+    background=pygame.image.load('assets/menu_assets/background.jpg').convert_alpha()
     
     #to create 4 buttons
-    button1=Button('assets/menu_assets/button_spooder-car.png',(115,100),'assets/menu_assets/button_spooder-car(1).png')
-    button2=Button('assets/menu_assets/button_kalahalla.png',(650,100),'assets/menu_assets/button_kalahalla(1).png')
-    button3=Button('assets/menu_assets/button_flappy-thaav.png',(115,300),'assets/menu_assets/button_flappy-thaav(1).png')
-    button4=Button('assets/menu_assets/button_back.png',(650,300),'assets/menu_assets/button_back(1).png')
-    ##a=0;print(a)
+    h=160
+    kalahalla_button=Button('assets/menu_assets/kalahalla1.png',(450,h),'assets/menu_assets/kalahalla2.png')
+    flappy_button=Button('assets/menu_assets/flappy1.png',(900,h),'assets/menu_assets/flappy2.png')
+    spidercar_button=Button('assets/menu_assets/spidercar1.png',(450,2*h),'assets/menu_assets/spidercar2.png')
+    pong_button=Button('assets/menu_assets/pong1.png',(900,2*h),'assets/menu_assets/pong2.png')
+    shooter_button=Button('assets/menu_assets/shooter1.png',(450,3*h),'assets/menu_assets/shooter2.png')
+    tictactoe_button=Button('assets/menu_assets/tictactoe1.png',(900,3*h),'assets/menu_assets/tictactoe2.png')
+    dino_button=Button('assets/menu_assets/dino1.png',(450,4*h),'assets/menu_assets/dino2.png')
+    back_button=Button('assets/menu_assets/back1.png',(900,4*h),'assets/menu_assets/back2.png')
+
     #main loop of main menu
     while True:
         for event in pygame.event.get():    #to quit the game
             if event.type==pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-        
+            elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
+                return opening_screen()
+            
         window.blit(background,(0,0))
 
         #to move to the actual game based on the button clicked by the user
-        if button1.draw():
+        if kalahalla_button.draw():
             bgm.stop()
-            return car_game.spooder_car()
+            bgm.stop()
+            return jumper.menu()
         
-        elif button2.draw():
-            return jumper.game()
-        
-        elif button3.draw():
+        elif flappy_button.draw():
             bgm.stop()
             return FlappyBirdKnockOff.game_pause_start()
         
-        elif button4.draw():
+        elif spidercar_button.draw():
+            bgm.stop()
+            return car_game.spooder_car()
+        
+        elif pong_button.draw():
+            bgm.stop()
+            return ping_pong.game()
+        
+        elif shooter_button.draw():
+            bgm.stop()
+            #shooter.game()
+            print('coming in next update')
+            pass
+        
+        elif tictactoe_button.draw():
+            bgm.stop()
+            return tictactoe.game()
+
+        elif dino_button.draw():
+            bgm.stop()
+            #dino.game()
+            print('coming in next update')
+            pass
+
+        elif back_button.draw():
             return opening_screen()
         
         #to update the screen and to control fps

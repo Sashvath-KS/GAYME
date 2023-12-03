@@ -1,8 +1,8 @@
 import pygame, sys, random, pickle
 from pygame import mixer
 
-pygame.init()
-pygame.mixer.init()
+#pygame.init()
+#pygame.mixer.init()
 
 def starting():
     global disp, clock, og_disp, quit_button_image, start_button_image, reset_button_image, quit_button_rect, start_button_rect, quit_game, reset_button_rect
