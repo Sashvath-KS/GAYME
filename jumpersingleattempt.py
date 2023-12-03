@@ -1,6 +1,7 @@
 import pygame
 import os 
 import random
+import sys
 player1type = ""
 player2type = ""
 difficultylevel = ""
@@ -50,6 +51,7 @@ def menu():
         for event in pygame.event.get():    #to quit the game
             if event.type==pygame.QUIT:
                 pygame.quit()
+                sys.exit()
         keypressed = pygame.key.get_pressed()
         if keypressed[pygame.K_SPACE]:
             break
@@ -547,7 +549,7 @@ def game():
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False  
+                running = False
         #Getting the key pressed 
         keypressed = pygame.key.get_pressed() 
         #Drawing the various sprites on the screen
