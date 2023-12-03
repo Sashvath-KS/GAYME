@@ -5,11 +5,12 @@ import sys
 player1type = ""
 player2type = ""
 difficultylevel = ""
+
 def menu():
     global player1type,player2type,difficultylevel
     width = 800
     height = 600 
-    pygame.init()
+    #pygame.init()
     fps = pygame.time.Clock()    
     window = pygame.display.set_mode((width,height))
     backgroundimage = pygame.transform.scale(pygame.image.load('assets/jumper_assets/bgimgmenu.jpg'),(width,height))
@@ -18,7 +19,6 @@ def menu():
         box = font.render(text,True,colour)
 
         window.blit(box,(x,y))
-        boxrect = box.get_rect()
         
     class Button:
         #init function is given to get the attributes of the button
@@ -52,6 +52,9 @@ def menu():
             if event.type==pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
+                print("d")
+                return True
         keypressed = pygame.key.get_pressed()
         if keypressed[pygame.K_SPACE]:
             break
@@ -91,7 +94,7 @@ def menu():
     game()
 
 def game():  
-    pygame.init() 
+    #pygame.init() 
     blockheight = 50
     blockwidth = 150
     width = 800
@@ -550,6 +553,9 @@ def game():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
+                print("d")
+                return True
         #Getting the key pressed 
         keypressed = pygame.key.get_pressed() 
         #Drawing the various sprites on the screen
@@ -607,5 +613,4 @@ def game():
             abullet.checkhitplayer()
         pygame.display.flip()
         fps.tick(60)   
-    pygame.quit()
-menu()
+    #pygame.quit()

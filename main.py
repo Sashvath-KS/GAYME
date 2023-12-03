@@ -1,5 +1,5 @@
 import pygame,sys
-import car_game , jumper ,FlappyBirdKnockOff, ping_pong , tictactoe #,shooter
+import car_game , jumper ,FlappyBirdKnockOff, ping_pong , tictactoe ,jumpersingleattempt#,shooter
 
 #to start pygame
 pygame.init()
@@ -112,9 +112,7 @@ def main_menu():
 
         #to move to the actual game based on the button clicked by the user
         if kalahalla_button.draw():
-            bgm.stop()
-            bgm.stop()
-            return jumper.menu()
+            return kalahallachoice()
         
         elif flappy_button.draw():
             bgm.stop()
@@ -152,6 +150,40 @@ def main_menu():
         ##clock.tick(60)
         ##a+=1;print(a)
         
+def kalahallachoice():
+    background=pygame.image.load('assets/menu_assets/background.jpg').convert_alpha()
+    singleplayer=Button('assets/menu_assets/kalahallasingle.png',(300,200),'assets/menu_assets/kalahallasingle.png')
+    multiplayer=Button('assets/menu_assets/kalahallamulti.png',(600,200),'assets/menu_assets/kalahallamulti.png')
+    #main loop of main menu
+    while True:
+        for event in pygame.event.get():    #to quit the game
+            if event.type==pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
+                return opening_screen()
+            
+        window.blit(background,(0,0))
+        issingleplayer = singleplayer.draw()
+        ismultiplayer = multiplayer.draw()
+        
+        if issingleplayer:
+            bgm.stop()
+            return jumpersingleattempt.menu()
+            
+        elif ismultiplayer:
+            bgm.stop()
+            return jumper.menu()
+            
+        #to move to the actual game based on the button clicked by the user
+       
+        
+        
+        
+        #to update the screen and to control fps
+        pygame.display.update()
+        ##clock.tick(60)
+        ##a+=1;print(a)
 
 flag=opening_screen()   #to check if user wants to return to main menu
 

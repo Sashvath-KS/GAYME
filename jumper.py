@@ -14,8 +14,7 @@ def menu():
         box = font.render(text,True,colour)
 
         window.blit(box,(x,y))
-        boxrect = box.get_rect()
-        print(boxrect)
+      
     class Button:
         #init function is given to get the attributes of the button
         def __init__(self,path1,position) -> None:
@@ -37,7 +36,7 @@ def menu():
     adboy_p2 = Button(path1= r"assets/jumper_assets/Characters/Adboy/Player_Sprite_Walking/Run (1).png",position=(500,10))
     robot_p2 = Button(path1= r"assets/jumper_assets/Characters/Robot/Player_Sprite_Walking/Run (1).png",position=(500,150))
     ninjagirl_p2 = Button(path1= r"assets/jumper_assets/Characters/Ninjagirl/Player_Sprite_Walking/Run__000.png",position=(500,300))
-    beedabro_p2 = Button(path1= r"assets/jumper_assets/Characters/Beeda Bro/Player_Sprite_Walking/1.png",position=(500,450))
+    beedabro_p2 = Button(path1= r"assets/jumper_assets/Characters/Beeda Bro/Player_Sprite_Walking/1.jpg",position=(500,450))
     player1type = " "
     player2type = " "
 
@@ -48,6 +47,7 @@ def menu():
                 pygame.quit()
             
             elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
+                print("d")
                 return True
             
         keypressed = pygame.key.get_pressed()
@@ -92,7 +92,7 @@ def menu():
 
 
 def game():  
-    pygame.init() 
+    #pygame.init() 
     blockheight = 50
     blockwidth = 150
     width = 800
@@ -330,7 +330,7 @@ def game():
     blocksgrp = pygame.sprite.Group()
     player1grp.add([player1,player2])
     blocksgrp.add([block1,block2,block3])
-    backgroundimage = pygame.transform.scale(pygame.image.load('assets/jumper_assets/bgimg.jpeg'),(width,height))
+    backgroundimage = pygame.transform.scale(pygame.image.load('assets/jumper_assets/bgimg.jpg'),(width,height))
     bg1 = pygame.Rect(10,10,100,10)
     fg1= pygame.Rect(10,10,100,10)
     bg2 = pygame.Rect(10,10,100,10)
@@ -601,4 +601,4 @@ def game():
         fps.tick(60)   
     return True
     #pygame.quit()
-menu()
+    
