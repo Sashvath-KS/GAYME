@@ -231,7 +231,7 @@ def game():
 
         def jumpaction(self):
             nonlocal height,player1
-            afunctiontodealwithdumbcollisions()
+            collisions()
             self.image = pygame.transform.scale(self.image,(90,140))
             if self.side !=self.tempside:
                 self.image = pygame.transform.scale(self.image,(90,140))
@@ -350,7 +350,7 @@ def game():
     elif difficultylevel == "Easy":
         botspeed = 5
         shiftpressmax = 20
-    def afunctiontodealwithdumbcollisions():
+    def collisions():
         #These are temporary lists that store information on whether the player is colliding with the block
         collisionlist1=[]
         collisionlist2 = []

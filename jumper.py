@@ -229,7 +229,7 @@ def game():
 
         def jumpaction(self):
             nonlocal height,player1
-            afunctiontodealwithdumbcollisions()
+            collisions()
             self.image = pygame.transform.scale(self.image,(100,140))
             if self.side !=self.tempside:
                 self.image = pygame.transform.scale(self.image,(100,140))
@@ -337,7 +337,7 @@ def game():
     fg1= pygame.Rect(10,10,100,10)
     bg2 = pygame.Rect(10,10,100,10)
     fg2= pygame.Rect(10,10,100,10)
-    def afunctiontodealwithdumbcollisions():
+    def collisions():
         #These are temporary lists that store information on whether the player is colliding with the block
         collisionlist1=[]
         collisionlist2 = []
