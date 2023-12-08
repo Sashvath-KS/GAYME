@@ -1,5 +1,5 @@
 import pygame,sys
-import car_game , jumper ,FlappyBirdKnockOff, ping_pong , tictactoe ,jumpersingleattempt,shooter
+import car_game , jumper ,FlappyBirdKnockOff, ping_pong , tictactoe ,jumpersingleattempt#,shooter
 
 #to start pygame
 pygame.init()
@@ -10,6 +10,7 @@ window_width=900
 window_height=514
 window_size=(window_width,window_height)
 window=pygame.display.set_mode(window_size)
+pygame.display.set_caption('arcade')
 
 #menu background music
 bgm=pygame.mixer.Sound('assets/menu_assets/menu_music.mp3')
@@ -190,5 +191,6 @@ flag=opening_screen()   #to check if user wants to return to main menu
 while flag:
     pygame.init()
     window=pygame.display.set_mode(window_size)
+    pygame.display.set_caption('arcade')
     bgm.play(loops=-1)
     main_menu()

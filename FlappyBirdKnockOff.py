@@ -50,7 +50,7 @@ class Bird():
         keys = pygame.key.get_pressed()
 
 
-        if keys[pygame.K_SPACE] and self.jump_pressed == True:
+        if (keys[pygame.K_SPACE] or True in pygame.mouse.get_pressed()) and self.jump_pressed == True:
             #setting birds gravity to +8
             self.grav = 9 
             self.jump_pressed = False
