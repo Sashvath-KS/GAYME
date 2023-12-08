@@ -341,11 +341,12 @@ def game():
     bg2 = pygame.Rect(10,10,100,10)
     fg2= pygame.Rect(10,10,100,10)
     botdist = 0 
+    gamestate = ""
     if difficultylevel == "Hard":
-        botspeed = 5
+        botspeed = 7
         shiftpressmax =4
     elif difficultylevel == "Medium":
-        botspeed = 5
+        botspeed = 6
         shiftpressmax = 10
     elif difficultylevel == "Easy":
         botspeed = 5
@@ -581,7 +582,7 @@ def game():
         fg2.width = player2.health
         
         #Rendering animations and movements for player1 if it is alive
-        if player1.lives>0 and player2.lives>0:
+        if player1.lives>0:
             pygame.draw.rect(gamescreen,(255,0,0),bg1)
             pygame.draw.rect(gamescreen,(0,255,0),fg1)
             moveplayer11(keypressed)
@@ -590,10 +591,11 @@ def game():
             player1.makeplayerfallwhennotonablock()
             player1.checkhealth()
             player1.normalshootinganimation()
-            
         
+        else:
+            gamestate = "YOU LOSE :("
         #Rendering animations and movements for player2 if it is alive
-        if player2.lives>0 and player2.lives>0:
+        if player2.lives>0 and player1.lives>0:
             pygame.draw.rect(gamescreen,(255,0,0),bg2)
             pygame.draw.rect(gamescreen,(0,255,0),fg2)
             moveplayer12()
@@ -602,8 +604,9 @@ def game():
             player2.makeplayerfallwhennotonablock()
             player2.checkhealth()
             player2.normalshootinganimation()
-        
-    
+        else:
+             gamestate = "YOU WON!!!"
+        print(gamestate)
         bulletsgrp.update()
         #dont render everytime 
         #Drawing player health and lives left
@@ -611,7 +614,8 @@ def game():
         drawtext(f"Player 2 health:{player2.health}",defaultfont,450,0)
         drawtext(f"No of lives left:{player1.lives}",defaultfont,10,40)
         drawtext(f"No of lives left:{player2.lives}",defaultfont,450,40)
-        
+        if gamestate:
+            drawtext(gamestate,font=defaultfont,x =300,y =100)
         for abullet in bulletsgrp:
             abullet.checkhitplayer()
         pygame.display.flip()
