@@ -602,6 +602,8 @@ def game():
         drawtext(f"Player 2 health:{player2.health}",defaultfont,450,0)
         drawtext(f"No of lives left:{player1.lives}",defaultfont,10,40)
         drawtext(f"No of lives left:{player2.lives}",defaultfont,450,40)
+        drawtext(f"Player 1",defaultfont,*player1.rect.topleft)
+        drawtext(f"Player 2",defaultfont,*player2.rect.topleft)
         if gamestate:
             drawtext(gamestate,font=defaultfont,x =270,y =100)
         for abullet in bulletsgrp:
@@ -610,4 +612,3 @@ def game():
         fps.tick(60)   
     return True
     #pygame.quit()
-    
