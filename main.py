@@ -161,7 +161,7 @@ def kalahallachoice():
                 pygame.quit()
                 sys.exit()
             elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
-                return opening_screen()
+                return main_menu()
             
         window.blit(background,(0,0))
         issingleplayer = singleplayer.draw()
