@@ -42,7 +42,7 @@ class Button:
 # opening screen of the game
 def opening_screen():
     
-    background=pygame.image.load('assets/menu_assets/background.jpg').convert_alpha()
+    background=pygame.image.load('assets/menu_assets/background.png').convert_alpha()
     
     #to animate the button by changing the image
     b_index=0
@@ -51,8 +51,8 @@ def opening_screen():
     #button attributes and button definition 
     button_xpos=window_width//2
     button_ypos=window_height//2
-    button1=Button('assets/menu_assets/start1.png',(button_xpos,button_ypos),'assets/menu_assets/start1.png')
-    button2=Button('assets/menu_assets/start2.png',(button_xpos,button_ypos),'assets/menu_assets/start1.png')
+    button1=Button('assets/menu_assets/start1.png',(button_xpos,button_ypos),'assets/menu_assets/start3.png')
+    button2=Button('assets/menu_assets/start2.png',(button_xpos,button_ypos),'assets/menu_assets/start3.png')
     
     #to check if the button was clicked
     clicked=False
@@ -79,7 +79,7 @@ def opening_screen():
         
         #to update screen and to control fps
         pygame.display.update()
-        ##clock.tick(60)
+        clock.tick(100)
     
     #to change the screen to main menu
     if clicked:return main_menu()
@@ -87,7 +87,7 @@ def opening_screen():
 #main menu of the game
 def main_menu():
     
-    background=pygame.image.load('assets/menu_assets/background.jpg').convert_alpha()
+    background=pygame.image.load('assets/menu_assets/background.png').convert_alpha()
     
     #to create 4 buttons
     h=int(160*(2/3))
@@ -151,9 +151,9 @@ def main_menu():
         ##a+=1;print(a)
         
 def kalahallachoice():
-    background=pygame.image.load('assets/menu_assets/background.jpg').convert_alpha()
-    singleplayer=Button('assets/menu_assets/kalahallasingle.png',(300,200),'assets/menu_assets/kalahallasingle.png')
-    multiplayer=Button('assets/menu_assets/kalahallamulti.png',(600,200),'assets/menu_assets/kalahallamulti.png')
+    background=pygame.image.load('assets/menu_assets/background.png').convert_alpha()
+    singleplayer=Button('assets/menu_assets/single-player1.png',(300,200),'assets/menu_assets/single-player2.png')
+    multiplayer=Button('assets/menu_assets/multiplayer1.png',(600,200),'assets/menu_assets/multiplayer2.png')
     #main loop of main menu
     while True:
         for event in pygame.event.get():    #to quit the game
