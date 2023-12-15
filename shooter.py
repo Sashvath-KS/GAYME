@@ -157,7 +157,7 @@ def blit_and_draw_rect():
     drawtext(text ="Player 1 Score: "+ str(hostscore),font=defaultfont,x = 0,y = 580)
     
     
-    drawtext(text ="Player 1 Score: "+ str(playerscore),font=defaultfont,x = 450,y = 580)
+    drawtext(text ="Player 2 Score: "+ str(playerscore),font=defaultfont,x = 450,y = 580)
 
     
 
