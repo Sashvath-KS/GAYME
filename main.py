@@ -91,14 +91,14 @@ def main_menu():
     
     #to create 4 buttons
     h=int(160*(2/3))
-    kalahalla_button=Button('assets/menu_assets/kalahalla1.png',(300,h),'assets/menu_assets/kalahalla2.png')
-    flappy_button=Button('assets/menu_assets/flappy1.png',(600,h),'assets/menu_assets/flappy2.png')
-    spidercar_button=Button('assets/menu_assets/spidercar1.png',(300,2*h),'assets/menu_assets/spidercar2.png')
-    pong_button=Button('assets/menu_assets/pong1.png',(600,2*h),'assets/menu_assets/pong2.png')
-    shooter_button=Button('assets/menu_assets/shooter1.png',(300,3*h),'assets/menu_assets/shooter2.png')
-    tictactoe_button=Button('assets/menu_assets/tictactoe1.png',(600,3*h),'assets/menu_assets/tictactoe2.png')
-    dino_button=Button('assets/menu_assets/dino1.png',(300,4*h),'assets/menu_assets/dino2.png')
-    back_button=Button('assets/menu_assets/back1.png',(600,4*h),'assets/menu_assets/back2.png')
+    kalahalla_button=Button('assets/menu_assets/kalahalla1.png',(250,h),'assets/menu_assets/kalahalla2.png')
+    flappy_button=Button('assets/menu_assets/flappy1.png',(650,h),'assets/menu_assets/flappy2.png')
+    spidercar_button=Button('assets/menu_assets/spidercar1.png',(250,2*h),'assets/menu_assets/spidercar2.png')
+    pong_button=Button('assets/menu_assets/pong1.png',(650,2*h),'assets/menu_assets/pong2.png')
+    shooter_button=Button('assets/menu_assets/shooter1.png',(250,3*h),'assets/menu_assets/shooter2.png')
+    tictactoe_button=Button('assets/menu_assets/tictactoe1.png',(650,3*h),'assets/menu_assets/tictactoe2.png')
+    dino_button=Button('assets/menu_assets/dino1.png',(250,4*h),'assets/menu_assets/dino2.png')
+    back_button=Button('assets/menu_assets/back1.png',(650,4*h),'assets/menu_assets/back2.png')
 
     #main loop of main menu
     while True:
