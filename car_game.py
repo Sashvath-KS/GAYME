@@ -18,7 +18,7 @@ def spooder_car():
     window_width=960
     window_height=640
     window=pygame.display.set_mode((window_width,window_height))
-    pygame.display.set_caption('spooder game')
+    pygame.display.set_caption('car game')
 
     #game start screen
     start_screen=pygame.image.load('assets/spooder_assets/start_screen.jpg').convert()
