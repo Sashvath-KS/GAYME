@@ -2,9 +2,12 @@ import pygame
 import random
 import pyrebase
 import threading
+
+import subprocess
+mainfile = "main.py"
 def maingame():
     
-    #pygame.init()
+    pygame.init()
     
     #The email and password of the user
     # For testing purposes i have hardcodede it     
@@ -195,7 +198,11 @@ def maingame():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                
+                elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
+                    pygame.quit()
+                    subprocess.run(["python", mainfile])
+                    
+                    return True
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if role == "host":
                 
@@ -204,6 +211,7 @@ def maingame():
                         bulletpos = playerbox.centery
                 else:
                     bulletpos = 0    
+                
             
             keypressed = pygame.key.get_pressed()
             if role == "host":
