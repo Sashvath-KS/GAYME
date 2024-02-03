@@ -45,7 +45,7 @@ def menu():
     
     player1type = " "
     player2type = random.choice(("Adboy","Ninjagirl","Robot","Beeda Bro"))
-
+    disptext = "Press Space to Play Game"
     while True:
         window.blit(backgroundimage,(0,0))
         for event in pygame.event.get():    #to quit the game
@@ -53,11 +53,14 @@ def menu():
                 pygame.quit()
                 sys.exit()
             elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
-                print("d")
+                
                 return True
         keypressed = pygame.key.get_pressed()
         if keypressed[pygame.K_SPACE]:
-            break
+            if player1type!=" " and difficultylevel!= "":
+                break
+            else:
+                 disptext = "Select a player and mode"
         isadboy = adboy_p1.draw()
         isrobot = robot_p1.draw()
         isninjagirl = ninjagirl_p1.draw()
@@ -87,7 +90,7 @@ def menu():
 
         drawtext(text = f" Selected : {player1type}",font=defaultfont,x=0,y=0)
         drawtext(text = f"  Botlevel : {difficultylevel}",font=defaultfont,x=400,y=0)
-        drawtext(text = "Press Space to Play Game",font = defaultfont,x = 170,y = 560)
+        drawtext(text = disptext,font = defaultfont,x = 170,y = 560)
 
 
         pygame.display.update()
@@ -125,10 +128,10 @@ def game():
             self.origin = player
             self.rect = self.image.get_rect()
             if self.direction == "right":
-                self.rect.left = player.rect.right
+                self.rect.left = player.rect.right-30
                 self.rect.centery = player.rect.centery
             if self.direction == "left":
-                self.rect.right = player.rect.left
+                self.rect.right = player.rect.left+30
                 self.rect.centery = player.rect.centery
                 self.image = pygame.transform.flip(self.image, True, False)
         def update(self):
@@ -155,7 +158,7 @@ def game():
                 elif self.direction=="left":
                     if player1.rect.left>=0:
                         player1.rect.centerx-=recoilvelocity
-                gamescreen.blit(bloodimg,(self.rect.left,self.rect.centery))
+                gamescreen.blit(bloodimg,(self.rect.left,self.rect.centery-20))
                 self.kill()
             if self.rect.colliderect(player2) and player2.lives>0 and self.origin!=player2: 
                 player2.health-=5
@@ -166,7 +169,7 @@ def game():
                 elif self.direction=="left":
                     if player2.rect.left>=0:
                         player2.rect.centerx-=recoilvelocity
-                gamescreen.blit(bloodimg,(self.rect.right,self.rect.centery))
+                gamescreen.blit(bloodimg,(self.rect.right,self.rect.centery-20))
                 self.kill()
             
                 
