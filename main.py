@@ -1,6 +1,6 @@
-import pygame,sys,subprocess
+import pygame,sys,subprocess,platform
 import car_game , jumper ,FlappyBirdKnockOff, ping_pong , tictactoe ,jumpersingleattempt,shooter,boom
-
+current_os = platform.system()
 #to start pygame
 pygame.init()
 pygame.mixer.init()
@@ -148,8 +148,10 @@ def main_menu():
         
 
         elif controls_button.draw() and not(clicked):
-            subprocess.run(['open', 'assets/CONTROLS.txt'], check=True)
-            clicked=True
+           if current_os == 'Darwin':  # macOS
+                subprocess.run(['open', 'assets/CONTROLS.txt'])
+           elif current_os == 'Windows':
+                    subprocess.run(['start', 'assets/CONTROLS.txt'], shell=True)
 
         #to update the screen and to control fps
         pygame.display.update()
