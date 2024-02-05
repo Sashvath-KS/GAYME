@@ -1,11 +1,12 @@
 import pygame, sys, random
+
+pygame.init()
+
 def game():
-    pygame.init()
-
-
-    sc_ht = 800
-    sc_w = 600
-
+    global exited
+    sc_ht = 900
+    sc_w = 514
+    exited = False
     screen = pygame.display.set_mode((sc_ht, sc_w))
 
     #assets
@@ -23,7 +24,18 @@ def game():
 
 
 
-
+    class BGMOVE:
+         def __init__(self,pos):
+            self.image=background
+            self.rect=self.image.get_rect()
+            self.rect.left=pos
+         
+             
+         def update(self):
+             screen.blit(self.image,self.rect)
+             
+             self.rect.left -= 5
+    
     class Dino:
         X_pos=0
         Y_pos=400
@@ -106,7 +118,7 @@ def game():
             self.image=image
             self.type=type
             self.rect=self.image[self.type].get_rect()
-            self.rect.x=sc_w
+            self.rect.x=sc_ht
             
         def update(self):
             self.rect.x-=game_speed
@@ -139,47 +151,10 @@ def game():
             screen.blit(self.image[0],self.rect)
             
         
-    class MovingBG:
-        def __init__(self):
-            nonlocal bg_pos_start
-            nonlocal first_few_initializing_bg_counter
-            self.image = pygame.transform.scale(pygame.image.load("assets/boom_assets/bg.png").convert_alpha(), pygame.display.get_window_size())
-            self.rect = self.image.get_rect(topleft =bg_pos_start)
-            if first_few_initializing_bg_counter<= 5:
-                bg_pos_start = (pygame.Surface.get_width(self.image)+bg_pos_start[0]-5,0)
-                first_few_initializing_bg_counter+=1
-
-
-        def out_of_bounds(self):
-            global bg_pos_start
-
-            if self.rect.x <= -1000:
-                bg_pos_start = (pygame.Surface.get_width(self.image)+BG_list[-1].rect.topleft[0]-5, BG_list[-1].rect.topleft[-1])
-                BG_list.remove(self)
-                BG_list.append(MovingBG())
-                print(BG_list)
-        
-        def bg_move(self):
-            self.rect.x -=5
-
-        def display_on_screen(self):
-            screen.blit(self.image,self.rect)
-
-        def update(self):
-            self.bg_move()
-            self.out_of_bounds()
-            self.display_on_screen()
-
-    first_few_initializing_bg_counter=0             #to initialise a few bg counter
-    bg_pos_start = (0,0)                            #bg pos var
-    BG_list = [MovingBG() for x in range(5)]          #list containing the bgs
-
-
-
-
     def main():
-        global game_speed,points,obstacles
+        global game_speed,points,obstacles,exited
         running=True
+        
         clock=pygame.time.Clock()
         player=Dino(run)
         game_speed=14
@@ -190,6 +165,7 @@ def game():
 
         def score():
             global points, game_speed
+            global exited
             points+=1
             if points%100==0:
                 game_speed+=1
@@ -198,20 +174,37 @@ def game():
             textRect=text.get_rect()
             textRect.center=(1000,40)
             screen.blit(text,textRect)
-
+        bg1 = BGMOVE(0*sc_ht) 
+        bg2 = BGMOVE(1*sc_ht)
+        bg3 = BGMOVE(2*sc_ht)
         while running:
+            bg1.update()
+            bg2.update()
+            bg3.update()
+            
+            
+            if bg1.rect.left<-1500:
+                bg1.rect.left = bg3.rect.right
+            if bg2.rect.left<-1500:
+                bg2.rect.left = bg1.rect.right
+            if bg3.rect.left<-1500:
+                bg3.rect.left = bg2.rect.right
+                    
+
+            if exited:
+                return True
             for event in pygame.event.get():
                 if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
-                    return True
+                    exited =  True
             onscreenpoints=font.render("Your Score: "+ str(points),True,(255,255,255))
             onscreenpointsrect = onscreenpoints.get_rect()
             onscreenpointsrect.topleft= (0,0)
             
             
             user_input=pygame.key.get_pressed()
-            for x in BG_list:
-                x.update()
-            #screen.blit(background,(0,0))
+
+            
+            
             
             player.draw(screen)
             player.update(user_input)
@@ -238,9 +231,11 @@ def game():
         
 
     def menu(death_count):
-        global points
+        global points,exited
         rrun=True
         while rrun:
+            if exited:
+                return True
             screen.fill((255,255,255))
             font=pygame.font.Font('freesansbold.ttf',30)
             if death_count==0:
@@ -259,9 +254,12 @@ def game():
             pygame.display.update()
             for event in pygame.event.get():
                 if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
-                    return True
+                    exited = True
                 if event.type == pygame.KEYDOWN:
                     main()
 
+            
+
 
     menu(death_count=0)
+game()
