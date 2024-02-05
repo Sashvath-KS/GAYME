@@ -131,9 +131,7 @@ def main_menu():
             bgm.stop()
             pygame.quit()
             return shooter.maingame()
-            
-    
-        
+
         elif tictactoe_button.draw():
             bgm.stop()
             return tictactoe.game()
