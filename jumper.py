@@ -549,6 +549,7 @@ def game():
                 pygame.quit()
                 sys.exit()  
             elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
+                running = False
                 return True
         #Getting the key pressed 
         keypressed = pygame.key.get_pressed() 
