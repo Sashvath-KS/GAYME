@@ -153,7 +153,7 @@ def game():
         def out_of_bounds(self):
             global bg_pos_start
 
-            if self.rect.x <= -3600:
+            if self.rect.x <= -1000:
                 bg_pos_start = (pygame.Surface.get_width(self.image)+BG_list[-1].rect.topleft[0]-5, BG_list[-1].rect.topleft[-1])
                 BG_list.remove(self)
                 BG_list.append(MovingBG())
