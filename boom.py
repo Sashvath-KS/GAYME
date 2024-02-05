@@ -262,4 +262,4 @@ def game():
 
 
     menu(death_count=0)
-game()
+#game()
