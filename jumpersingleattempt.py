@@ -52,10 +52,12 @@ def menu():
             if event.type==pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
+            '''elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
                 
-                return True
+                return True'''
         keypressed = pygame.key.get_pressed()
+        if keypressed[pygame.K_ESCAPE]:
+            return True
         if keypressed[pygame.K_SPACE]:
             if player1type!=" " and difficultylevel!= "":
                 break

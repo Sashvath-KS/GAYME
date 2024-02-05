@@ -548,11 +548,13 @@ def game():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()  
-            elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
+            '''elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
                 running = False
-                return True
+                return True'''
         #Getting the key pressed 
-        keypressed = pygame.key.get_pressed() 
+        keypressed = pygame.key.get_pressed()
+        if keypressed[pygame.K_ESCAPE]:
+            return True
         #Drawing the various sprites on the screen
         bulletsgrp.draw(gamescreen)
         blocksgrp.draw(gamescreen)
