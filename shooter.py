@@ -6,12 +6,11 @@ import threading
 import subprocess
 mainfile = "main.py"
 def maingame():
-    
-    pygame.init()
+
     
     #The email and password of the user
     # For testing purposes i have hardcodede it     
-
+    pygame.init()
     email = "a@gmail.com"
     password = "123456"
     #the config dict with all the neccessary details required to connect to the databse
@@ -199,10 +198,8 @@ def maingame():
                 if event.type == pygame.QUIT:
                     running = False
                 elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
-                    pygame.quit()
-                    subprocess.run(["python", mainfile])
-                    
-                    return True
+                   running = False
+                
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if role == "host":
                 
@@ -245,14 +242,15 @@ def maingame():
         pygame.quit() 
         db.child(str(gameconnectionid)+"host").remove(user.get("idToken"))
         db.child(str(gameconnectionid)+"player").remove(user.get("idToken")) #Making pushdata function as a thread to reduce downtime
-
+    
     #Making the stream function as a thread to ensure that it is constantly being run 
     p1 = threading.Thread(target = pushdata,daemon=True)
     p1.start()
     p2 = threading.Thread(target = stremandret,daemon=True)
     p2.start()
     game()
-
+    return True
+    
 
 
 
