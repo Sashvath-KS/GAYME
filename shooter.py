@@ -141,7 +141,7 @@ def maingame():
     varassignment()
     def config():
         global gameconnectionid,role
-        role= input("Do you want to be a host or a player").lower()
+        role= input("Do you want to be a host or a player: ").lower()
         if role == "host":
             gameconnectionid = random.randrange(123456,999999)
             print(gameconnectionid)
