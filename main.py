@@ -1,4 +1,4 @@
-import pygame,sys
+import pygame,sys,subprocess
 import car_game , jumper ,FlappyBirdKnockOff, ping_pong , tictactoe ,jumpersingleattempt,shooter,boom
 
 #to start pygame
@@ -99,6 +99,8 @@ def main_menu():
     tictactoe_button=Button('assets/menu_assets/tictactoe1.png',(650,3*h),'assets/menu_assets/tictactoe2.png')
     dino_button=Button('assets/menu_assets/dino1.png',(250,4*h),'assets/menu_assets/dino2.png')
     back_button=Button('assets/menu_assets/back1.png',(650,4*h),'assets/menu_assets/back2.png')
+    controls_button=Button('assets/menu_assets/controls_button_1.png',(window_width-23,23),'assets/menu_assets/controls_button_2.png')
+    clicked=False
 
     #main loop of main menu
     while True:
@@ -144,6 +146,11 @@ def main_menu():
         elif back_button.draw():
             return opening_screen()
         
+
+        elif controls_button.draw() and not(clicked):
+            subprocess.run(['open', 'assets/CONTROLS.txt'], check=True)
+            clicked=True
+
         #to update the screen and to control fps
         pygame.display.update()
         ##clock.tick(60)
