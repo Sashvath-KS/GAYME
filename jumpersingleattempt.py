@@ -49,15 +49,13 @@ def menu():
     while True:
         window.blit(backgroundimage,(0,0))
         for event in pygame.event.get():    #to quit the game
-            if event.type==pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+            if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
+                return True
             '''elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
                 
                 return True'''
         keypressed = pygame.key.get_pressed()
-        if keypressed[pygame.K_ESCAPE]:
-            return True
+    
         if keypressed[pygame.K_SPACE]:
             if player1type!=" " and difficultylevel!= "":
                 break
@@ -560,16 +558,16 @@ def game():
         gamescreen.blit(backgroundimage,(0,0))
         
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
                 running = False
+                return True
             '''elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
                 running = False
                 return True'''
         
         #Getting the key pressed 
         keypressed = pygame.key.get_pressed() 
-        if keypressed[pygame.K_ESCAPE]:
-            return True
+      
         #Drawing the various sprites on the screen
         bulletsgrp.draw(gamescreen)
         blocksgrp.draw(gamescreen)
