@@ -46,11 +46,12 @@ def menu():
             if event.type==pygame.QUIT:
                 pygame.quit()
             
-            elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
-                print("d")
+            '''elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
                 return True
-            
+            '''
         keypressed = pygame.key.get_pressed()
+        if keypressed[pygame.K_ESCAPE]:
+            return True
         if keypressed[pygame.K_SPACE]:
              if player1type!=" " and player2type!= "":
                 break
