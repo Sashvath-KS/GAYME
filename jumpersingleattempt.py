@@ -631,4 +631,5 @@ def game():
             abullet.checkhitplayer()
         pygame.display.flip()
         fps.tick(60)   
+        
     #pygame.quit()
