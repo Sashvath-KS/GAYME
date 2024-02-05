@@ -1,5 +1,5 @@
 import pygame,sys
-import car_game , jumper ,FlappyBirdKnockOff, ping_pong , tictactoe ,jumpersingleattempt,shooter
+import car_game , jumper ,FlappyBirdKnockOff, ping_pong , tictactoe ,jumpersingleattempt,shooter,boom
 
 #to start pygame
 pygame.init()
@@ -138,9 +138,8 @@ def main_menu():
 
         elif dino_button.draw():
             bgm.stop()
-            #dino.game()
-            print('coming in next update')
-            pass
+            boom.game()
+            
 
         elif back_button.draw():
             return opening_screen()
