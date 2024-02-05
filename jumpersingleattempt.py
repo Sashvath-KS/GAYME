@@ -594,8 +594,8 @@ def game():
             player1.checkhealth()
             player1.normalshootinganimation()
         
-        else:
-            gamestate = "YOU LOSE :("
+       
+            
         #Rendering animations and movements for player2 if it is alive
         if player2.lives>0 and player1.lives>0:
             pygame.draw.rect(gamescreen,(255,0,0),bg2)
@@ -606,9 +606,14 @@ def game():
             player2.makeplayerfallwhennotonablock()
             player2.checkhealth()
             player2.normalshootinganimation()
-        else:
-             gamestate = "YOU WON!!!"
-        print(gamestate)
+        if player1.lives>0 and player2.lives==0 and player2.health == 0 :
+            gamestate = "YOU WON!!"
+        if player2.lives>0 and player1.lives==0 and player1.health == 0 :
+            gamestate = "YOU LOSE!!"
+        
+
+             
+        
         bulletsgrp.update()
         #dont render everytime 
         #Drawing player health and lives left
@@ -616,8 +621,10 @@ def game():
         drawtext(f"Player 2 health:{player2.health}",defaultfont,450,0)
         drawtext(f"No of lives left:{player1.lives}",defaultfont,10,40)
         drawtext(f"No of lives left:{player2.lives}",defaultfont,450,40)
-        drawtext(f"Player 1",defaultfont,*player1.rect.topleft)
-        drawtext(f"BOT",defaultfont,*player2.rect.topleft)
+        if player1.lives>0 or player1.health>0:
+            drawtext(f"Player 1",defaultfont,*player1.rect.topleft)
+        if player2.lives>0 or player2.health>0: 
+            drawtext(f"BOT",defaultfont,*player2.rect.topleft)
         if gamestate:
             drawtext(gamestate,font=defaultfont,x =300,y =100)
         for abullet in bulletsgrp:

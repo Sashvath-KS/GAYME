@@ -581,8 +581,8 @@ def game():
             player1.makeplayerfallwhennotonablock()
             player1.checkhealth()
             player1.normalshootinganimation()
-        else:
-            gamestate = "Player 2 WINS !!!"
+       
+           
         
         #Rendering animations and movements for player2 if it is alive
         if player2.lives>0 :
@@ -594,9 +594,10 @@ def game():
             player2.makeplayerfallwhennotonablock()
             player2.checkhealth()
             player2.normalshootinganimation()
-        else:
-            gamestate = "Player 1 WINS !!!"
-        
+        if player1.lives>0 and player2.lives==0 and player2.health == 0 :
+            gamestate = "PLAYER 1 WINS!"
+        if player2.lives>0 and player1.lives==0 and player1.health == 0 :
+            gamestate = "PLAYER 2 WINS!"
     
         bulletsgrp.update()
 
@@ -605,8 +606,10 @@ def game():
         drawtext(f"Player 2 health:{player2.health}",defaultfont,450,0)
         drawtext(f"No of lives left:{player1.lives}",defaultfont,10,40)
         drawtext(f"No of lives left:{player2.lives}",defaultfont,450,40)
-        drawtext(f"Player 1",defaultfont,*player1.rect.topleft)
-        drawtext(f"Player 2",defaultfont,*player2.rect.topleft)
+        if player1.lives>0 or player1.health>0:
+            drawtext(f"Player 1",defaultfont,*player1.rect.topleft)
+        if player2.lives>0 or player2.health>0:
+            drawtext(f"Player 2",defaultfont,*player2.rect.topleft)
         if gamestate:
             drawtext(gamestate,font=defaultfont,x =270,y =100)
         for abullet in bulletsgrp:
