@@ -3,11 +3,12 @@ import pygame, sys, random
 pygame.init()
 
 def game():
-    #global exited
+    global exited
     sc_ht = 900
     sc_w = 514
-    #exited = False
+    exited = False
     screen = pygame.display.set_mode((sc_ht, sc_w))
+    beepsound = pygame.mixer.Sound(f"assets/boom_assets/beep.wav")  
 
     #assets
     background=pygame.image.load("assets/boom_assets/bg.png")
@@ -38,8 +39,8 @@ def game():
     
     class Dino:
         X_pos=0
-        Y_pos=400
-        Y_pos_duck=430
+        Y_pos=410
+        Y_pos_duck=440
         JUMP_VEL=8.5
 
 
@@ -72,6 +73,7 @@ def game():
                 self.step_index=0
 
             if user_input[pygame.K_UP] or user_input[pygame.K_SPACE] and not self.dino_jump:
+                beepsound.play()
                 self.dino_duck=False
                 self.dino_run=False
                 self.dino_jump=True
@@ -152,7 +154,7 @@ def game():
             
         
     def main():
-        global game_speed,points,obstacles #,exited
+        global game_speed,points,obstacles ,exited
         running=True
         
         clock=pygame.time.Clock()
@@ -165,7 +167,7 @@ def game():
 
         def score():
             global points, game_speed
-            #global exited
+            global exited
             points+=1
             if points%100==0:
                 game_speed+=1
@@ -191,11 +193,11 @@ def game():
                 bg3.rect.left = bg2.rect.right
                     
 
-            #if exited:
-            #    return True
+            if exited:
+                return True
             for event in pygame.event.get():
                 if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
-                    #exited =  True
+                    exited =  True
                     return True
             onscreenpoints=font.render("Your Score: "+ str(points),True,(255,255,255))
             onscreenpointsrect = onscreenpoints.get_rect()
@@ -232,11 +234,12 @@ def game():
         
 
     def menu(death_count):
-        global points #,exited
+        global points 
+        global exited
         rrun=True
         while rrun:
-            #if exited:
-            #    return True
+            if exited:
+                return True
             screen.fill((255,255,255))
             font=pygame.font.Font('freesansbold.ttf',30)
             if death_count==0:
@@ -255,7 +258,7 @@ def game():
             pygame.display.update()
             for event in pygame.event.get():
                 if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
-                    #exited = True
+                    exited = True
                     return True
                 if event.type == pygame.KEYDOWN:
                     main()
