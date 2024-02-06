@@ -4,6 +4,7 @@ def game():
     # pygame.init()
     pygame.font.init()
     clock=pygame.time.Clock()
+    beepsound = pygame.mixer.Sound(f"assets/pong_assets/beep.wav")  
 
 
     screenw=800
@@ -17,7 +18,7 @@ def game():
     grey=(200,200,200)
     ballspeedx=6
     ballspeedy=6
-    font=pygame.font.Font("assets/pixel_font.ttf",20)
+    font=pygame.font.Font("assets/pong_assets/pixel_font.ttf",20)
     playerscore=opponentscore=0
 
     def ballanimation():
@@ -31,7 +32,9 @@ def game():
         if ball.left <=0 or ball.right>=screenw:
             ballspeedx*=-1
 
-        if ball.colliderect(player) or ball.colliderect(opponent):ballspeedx*=-1
+        if ball.colliderect(player) or ball.colliderect(opponent):
+            beepsound.play()
+            ballspeedx*=-1
 
         
         
@@ -61,14 +64,14 @@ def game():
         key=pygame.key.get_pressed()
 
         if key[pygame.K_UP]:
-            player.y-=5
+            player.y-=7
         elif key[pygame.K_DOWN]:
-            player.y+=5
+            player.y+=7
 
         if key[pygame.K_w]:
-            opponent.y-=5
+            opponent.y-=7
         elif key[pygame.K_s]:
-            opponent.y+=5
+            opponent.y+=7
         
         if player.bottom>=screenh:player.bottom=screenh
         if opponent.bottom>=screenh:opponent.bottom=screenh
