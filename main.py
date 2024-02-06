@@ -138,7 +138,7 @@ def main_menu():
 
         elif dino_button.draw():
             bgm.stop()
-            boom.game()
+            return boom.game()
             
 
         elif back_button.draw():
