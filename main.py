@@ -2,6 +2,7 @@ import pygame,sys,subprocess,platform
 import car_game , jumper ,FlappyBirdKnockOff, ping_pong , tictactoe ,jumpersingleplayer,shooter,boom
 current_os = platform.system()
 #to start pygame
+
 pygame.init()
 pygame.mixer.init()
 
@@ -56,7 +57,6 @@ def opening_screen():
     
     #to check if the button was clicked
     clicked=False
-    
     #main loop for the opening screen
     while not(clicked):
         for event in pygame.event.get():
@@ -65,7 +65,6 @@ def opening_screen():
                 sys.exit()
         
         window.blit(background,(0,0))
-        
         #button animation
         #whenever b_index becomes an int, the b_flag becomes T/F 
         b_index+=0.1
@@ -86,9 +85,7 @@ def opening_screen():
 
 #main menu of the game
 def main_menu():
-    
     background=pygame.image.load('assets/menu_assets/background.png').convert_alpha()
-    
     #to create 4 buttons
     h=int(160*(2/3))
     kalahalla_button=Button('assets/menu_assets/kalahalla1.png',(250,h),'assets/menu_assets/kalahalla2.png')
@@ -185,17 +182,11 @@ def kalahallachoice():
             b = jumper.menu()
             
         #to move to the actual game based on the button clicked by the user
-       
-        
-        
-        
         #to update the screen and to control fps
         pygame.display.update()
         ##clock.tick(60)
         ##a+=1;print(a)
-
 flag=opening_screen()   #to check if user wants to return to main menu
-
 #this loop allows the player to return to main menu at any time
 while flag:
     pygame.init()
