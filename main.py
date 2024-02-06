@@ -175,11 +175,11 @@ def kalahallachoice():
         
         if issingleplayer:
             bgm.stop()
-            a = jumpersingleplayer.menu()
+            return jumpersingleplayer.menu()
             
         elif ismultiplayer:
             bgm.stop()
-            b = jumper.menu()
+            return jumper.menu()
             
         #to move to the actual game based on the button clicked by the user
         #to update the screen and to control fps

@@ -96,7 +96,7 @@ def menu():
 
 
         pygame.display.update()
-    game()
+    return game()
 
 def game():  
     #pygame.init() 
@@ -642,5 +642,5 @@ def game():
             abullet.checkhitplayer()
         pygame.display.flip()
         fps.tick(60)   
-        
+    return True    
     #pygame.quit()

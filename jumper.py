@@ -91,7 +91,7 @@ def menu():
 
 
         pygame.display.update()
-    game()
+    return game()
 
 
 
