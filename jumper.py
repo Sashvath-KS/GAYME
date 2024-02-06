@@ -2,18 +2,19 @@ import pygame
 import os 
 import sys
 def menu():
+    #pygame.init()
     bgm=pygame.mixer.Sound('assets/jumper_assets/bgmmusic.mp3')
     bgm.play(loops=-1)
     bgm.set_volume(0.4)
     global player1type,player2type
     width = 800
     height = 600 
-    #pygame.init()
+   
     fps = pygame.time.Clock()    
     window = pygame.display.set_mode((width,height))
     backgroundimage = pygame.transform.scale(pygame.image.load('assets/jumper_assets/bgimgmenu.jpg'),(width,height))
     defaultfont = pygame.font.Font("assets/pixel_font.ttf",19)
-    def drawtext(text,font,x,y,colour = (255,255,255)):
+    def drawtext(text,font,x,y,colour = (255, 251, 3)):
         box = font.render(text,True,colour)
 
         window.blit(box,(x,y))
@@ -89,7 +90,7 @@ def menu():
 
         drawtext(text = f"Selected : {player1type}",font=defaultfont,x=0,y=0)
         drawtext(text = f"Selected : {player2type}",font=defaultfont,x=400,y=0)
-        drawtext(text = disptext,font = defaultfont,x = 170,y = 560,colour=(255,255,255))
+        drawtext(text = disptext,font = defaultfont,x = 170,y = 560,colour=(255, 251, 3))
 
 
         pygame.display.update()
@@ -454,7 +455,7 @@ def game():
                 stopleft2.append(True)
             else :
                 stopleft2.append(False)
-    def drawtext(text,font,x,y,colour = (255,255,255)):
+    def drawtext(text,font,x,y,colour = (255, 251, 3)):
         box = font.render(text,True,colour)
         gamescreen.blit(box,(x,y))
         
@@ -623,9 +624,9 @@ def game():
         drawtext(f"No of lives left:{player2.lives}",defaultfont,450,40)
         
         if player1.lives>0 or player1.health>0:
-            drawtext(f"Player 1",defaultfont,*player1.rect.topleft)
+            drawtext(f"Player 1",defaultfont,*player1.rect.topleft,colour=(255,255,255))
         if player2.lives>0 or player2.health>0:
-            drawtext(f"Player 2",defaultfont,*player2.rect.topleft)
+            drawtext(f"Player 2",defaultfont,*player2.rect.topleft,colour=(255,255,255))
         if gamestate:
             drawtext(gamestate,font=defaultfont,x =270,y =100)
         for abullet in bulletsgrp:

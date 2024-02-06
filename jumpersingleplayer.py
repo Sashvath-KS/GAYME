@@ -18,7 +18,7 @@ def menu():
     window = pygame.display.set_mode((width,height))
     backgroundimage = pygame.transform.scale(pygame.image.load('assets/jumper_assets/bgimgmenu.jpg'),(width,height))
     defaultfont = pygame.font.Font("assets/pixel_font.ttf",19)
-    def drawtext(text,font,x,y,colour = (255,255,255)):
+    def drawtext(text,font,x,y,colour = (255, 251, 3)):
         box = font.render(text,True,colour)
 
         window.blit(box,(x,y))
@@ -468,7 +468,7 @@ def game():
                 stopleft2.append(True)
             else :
                 stopleft2.append(False)
-    def drawtext(text,font,x,y,colour = (255,255,255)):
+    def drawtext(text,font,x,y,colour = (255, 251, 3)):
         box = font.render(text,True,colour)
         gamescreen.blit(box,(x,y))
         
@@ -638,9 +638,9 @@ def game():
         drawtext(f"No of lives left:{player1.lives}",defaultfont,10,40)
         drawtext(f"No of lives left:{player2.lives}",defaultfont,450,40)
         if player1.lives>0 or player1.health>0:
-            drawtext(f"Player 1",defaultfont,*player1.rect.topleft)
+            drawtext(f"Player 1",defaultfont,*player1.rect.topleft,colour=(255,255,255))
         if player2.lives>0 or player2.health>0: 
-            drawtext(f"BOT",defaultfont,*player2.rect.topleft)
+            drawtext(f"BOT",defaultfont,*player2.rect.topleft,colour=(255,255,255))
         if gamestate:
             drawtext(gamestate,font=defaultfont,x =300,y =100)
         for abullet in bulletsgrp:
