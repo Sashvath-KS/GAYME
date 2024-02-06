@@ -41,9 +41,11 @@ def menu():
     player2type = " "
     disptext = "Press Space to Play Game"
     while True:
+        global gamescreen
         window.blit(backgroundimage,(0,0))
         for event in pygame.event.get():    #to quit the game
             if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
+                gamescreen = pygame.display.set_mode((900,514))
                 return True
             
             '''elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
@@ -546,6 +548,7 @@ def game():
         for event in pygame.event.get():
             if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
                 running = False
+                gamescreen = pygame.display.set_mode((900,514))
                 return True
             '''elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
                 running = False

@@ -1,5 +1,5 @@
 import pygame,sys,subprocess,platform
-import car_game , jumper ,FlappyBirdKnockOff, ping_pong , tictactoe ,jumpersingleattempt,shooter,boom
+import car_game , jumper ,FlappyBirdKnockOff, ping_pong , tictactoe ,jumpersingleplayer,shooter,boom
 current_os = platform.system()
 #to start pygame
 pygame.init()
@@ -177,11 +177,11 @@ def kalahallachoice():
         
         if issingleplayer:
             bgm.stop()
-            return jumpersingleattempt.menu()
+            a = jumpersingleplayer.menu()
             
         elif ismultiplayer:
             bgm.stop()
-            return jumper.menu()
+            b = jumper.menu()
             
         #to move to the actual game based on the button clicked by the user
        
