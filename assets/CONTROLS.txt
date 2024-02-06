@@ -56,7 +56,21 @@ Shoot : Left Mouse Click
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 SUPER TICTACTOE
 Use mouse click to select the boxes
+How to play the game?
+
+In Super Tic-Tac-Toe, the game board is a 3x3 grid, and each cell of this grid contains a smaller 3x3 Tic-Tac-Toe grid. Players take turns selecting a symbol (X or O) and make their moves in one of the smaller grids. The catch is that the move's placement determines the next allowable larger grid cell for the opponent.
+
+First Move: The first move can be made in any of the 9 smaller grids.
+
+Claiming a Cell: After a player makes a move in a smaller grid, the next player must make a move in the corresponding cell of the larger 3x3 grid.
+
+Winning the Game: To win, a player must claim three cells in a row in the larger grid horizontally, vertically, or diagonally. Winning a smaller grid allows a player to claim the corresponding cell in the larger grid.
+
+Game End: The game ends when a player successfully claims three cells in a row in the larger grid or when the entire board is filled, resulting in a draw.
+
+Super Tic-Tac-Toe introduces a strategic layer to the classic game, requiring players to think ahead and consider both the smaller and larger grid positions for their moves. Players need to strategically plan their moves to not only win smaller grids but also strategically place their moves in the larger grid to block their opponent from claiming cells. It offers a more intricate and challenging gameplay experience compared to traditional Tic-Tac-Toe.
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 BOOM
 Jump - Space/Up Arrow Key
 Duck - Down Arrow Key
+
