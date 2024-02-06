@@ -2,6 +2,9 @@ import pygame
 import os 
 import sys
 def menu():
+    bgm=pygame.mixer.Sound('assets/jumper_assets/bgmmusic.mp3')
+    bgm.play(loops=-1)
+    bgm.set_volume(0.4)
     global player1type,player2type
     width = 800
     height = 600 
@@ -46,11 +49,10 @@ def menu():
         for event in pygame.event.get():    #to quit the game
             if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
                 gamescreen = pygame.display.set_mode((900,514))
+                bgm.stop()
                 return True
             
-            '''elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
-                return True
-            '''
+        
         keypressed = pygame.key.get_pressed()
         if keypressed[pygame.K_SPACE]:
              if player1type!=" " and player2type!= "":
@@ -91,18 +93,22 @@ def menu():
 
 
         pygame.display.update()
+    bgm.stop()
     return game()
 
 
 
 def game():  
+    bgm=pygame.mixer.Sound('assets/jumper_assets/bgmmusic.mp3')
+    bgm.play(loops=-1)
+    bgm.set_volume(0.4)
     #pygame.init() 
     blockheight = 50
     blockwidth = 150
     width = 800
     height = 600
     recoilvelocity = 7
-
+    
     defaultfont = pygame.font.Font("assets/pixel_font.ttf",18)
 
 
@@ -549,6 +555,7 @@ def game():
             if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
                 running = False
                 gamescreen = pygame.display.set_mode((900,514))
+                bgm.stop()
                 return True
             '''elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
                 running = False

@@ -8,6 +8,9 @@ difficultylevel = ""
 
 def menu():
     global player1type,player2type,difficultylevel
+    bgm=pygame.mixer.Sound('assets/jumper_assets/bgmmusic.mp3')
+    bgm.play(loops=-1)
+    bgm.set_volume(0.4)
     width = 800
     height = 600 
     #pygame.init()
@@ -52,10 +55,9 @@ def menu():
         for event in pygame.event.get():    #to quit the game
             if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
                 gamescreen = pygame.display.set_mode((900,514))
+                bgm.stop()
                 return True
-            '''elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
-                
-                return True'''
+    
         keypressed = pygame.key.get_pressed()
     
         if keypressed[pygame.K_SPACE]:
@@ -96,10 +98,14 @@ def menu():
 
 
         pygame.display.update()
+    bgm.stop()
     return game()
 
 def game():  
     #pygame.init() 
+    bgm=pygame.mixer.Sound('assets/jumper_assets/bgmmusic.mp3')
+    bgm.play(loops=-1)
+    bgm.set_volume(0.4)
     blockheight = 50
     blockwidth = 150
     width = 800
@@ -563,10 +569,9 @@ def game():
             if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
                 running = False
                 gamescreen = pygame.display.set_mode((900,514))
+                bgm.stop()
                 return True
-            '''elif event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE:
-                running = False
-                return True'''
+           
         
         #Getting the key pressed 
         keypressed = pygame.key.get_pressed() 
