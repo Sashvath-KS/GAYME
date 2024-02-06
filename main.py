@@ -120,6 +120,7 @@ def main_menu():
         elif flappy_button.draw():
             bgm.stop()
             return FlappyBirdKnockOff.game_pause_start()
+            
         
         elif spidercar_button.draw():
             bgm.stop()

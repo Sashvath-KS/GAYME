@@ -599,8 +599,11 @@ def game():
             player2.normalshootinganimation()
         if player1.lives>0 and player2.lives==0 and player2.health == 0 :
             gamestate = "PLAYER 1 WINS!"
+            drawtext(f"Press ESC to return to main menu",defaultfont,x = 130,y = 140)
         if player2.lives>0 and player1.lives==0 and player1.health == 0 :
             gamestate = "PLAYER 2 WINS!"
+            drawtext(f"Press ESC to return to main menu",defaultfont,x = 130,y = 140)
+
     
         bulletsgrp.update()
 
@@ -609,6 +612,7 @@ def game():
         drawtext(f"Player 2 health:{player2.health}",defaultfont,450,0)
         drawtext(f"No of lives left:{player1.lives}",defaultfont,10,40)
         drawtext(f"No of lives left:{player2.lives}",defaultfont,450,40)
+        
         if player1.lives>0 or player1.health>0:
             drawtext(f"Player 1",defaultfont,*player1.rect.topleft)
         if player2.lives>0 or player2.health>0:

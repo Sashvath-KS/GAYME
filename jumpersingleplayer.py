@@ -615,8 +615,10 @@ def game():
             player2.normalshootinganimation()
         if player1.lives>0 and player2.lives==0 and player2.health == 0 :
             gamestate = "YOU WON!!"
+            drawtext(f"Press ESC to return to main menu",defaultfont,x = 130,y = 140)
         if player2.lives>0 and player1.lives==0 and player1.health == 0 :
             gamestate = "YOU LOSE!!"
+            drawtext(f"Press ESC to return to main menu",defaultfont,x = 130,y = 140)
         
 
              
